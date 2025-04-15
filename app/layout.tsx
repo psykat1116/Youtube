@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const roboto = Roboto({
   subsets: [
@@ -23,33 +24,23 @@ export const metadata: Metadata = {
   description:
     "Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
   keywords: [
-    "youtube",
-    "videos",
     "music",
-    "upload",
     "share",
-    "friends",
-    "family",
     "world",
+    "videos",
+    "upload",
+    "family",
+    "friends",
+    "youtube",
     "content",
     "entertainment",
-    "streaming",
-    "platform",
-    "community",
-    "channels",
-    "subscriptions",
-    "trending",
-    "recommendations",
-    "search",
-    "playlists",
-    "live",
-    "events",
     "youtube clone",
     "video sharing",
-    "video platform",
-    "video hosting",
-    "video streaming",
     "video content",
+    "video hosting",
+    "video platform",
+    "video streaming",
+    "streaming platform",
     "video clone github",
   ],
   authors: {
@@ -58,6 +49,15 @@ export const metadata: Metadata = {
   },
   creator: "Saikat Samanta",
   applicationName: "Youtube",
+  openGraph: {
+    title: "Youtube",
+    description:
+      "Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
+    url: "",
+    siteName: "Youtube",
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -66,8 +66,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${roboto.className} antialiased`}>{children}</body>
-    </html>
+    <ClerkProvider afterSignOutUrl="/">
+      <html lang="en">
+        <body className={`${roboto.className} antialiased`}>{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }

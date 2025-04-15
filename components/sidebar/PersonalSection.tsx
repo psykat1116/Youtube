@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
 } from "../ui/sidebar";
 import Link from "next/link";
+import { useAuth, useClerk } from "@clerk/nextjs";
 
 const items = [
   {
@@ -36,6 +37,9 @@ const items = [
 ];
 
 const PersonalSection = () => {
+  const clerk = useClerk();
+  const { isSignedIn } = useAuth();
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>You</SidebarGroupLabel>
@@ -47,7 +51,12 @@ const PersonalSection = () => {
                 tooltip={item.title}
                 asChild
                 isActive={false} // TODO: Change to look at curremt pathname
-                onClick={() => {}} // TODO: Add onClick handler for auth
+                onClick={(e) => {
+                  if (!isSignedIn && item.auth) {
+                    e.preventDefault();
+                    return clerk.openSignIn();
+                  }
+                }}
               >
                 <Link href={item.url} className="flex itesm-center gap-4">
                   <item.icon />
