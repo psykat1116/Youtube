@@ -1,9 +1,23 @@
-import { trpc } from "@/trpc/server";
+import HomeView from "@/components/home/HomeView";
+import { HydrateClient, trpc } from "@/trpc/server";
 
-const Home = async () => {
-  void trpc.hello.prefetch({ text: "from TRPC" });
-  
-  return <div className="">client says</div>;
+export const dynamic = "force-dynamic";
+
+interface HomePageProps {
+  searchParams: Promise<{
+    categoryId?: string;
+  }>;
+}
+
+const HomePage = async ({ searchParams }: HomePageProps) => {
+  const { categoryId } = await searchParams;
+  void trpc.categories.getMany.prefetch();
+
+  return (
+    <HydrateClient>
+      <HomeView categoryId={categoryId} />
+    </HydrateClient>
+  );
 };
 
-export default Home;
+export default HomePage;
