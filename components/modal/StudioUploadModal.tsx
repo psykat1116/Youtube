@@ -1,12 +1,15 @@
 "use client";
+
 import { trpc } from "@/trpc/client";
 import { Button } from "../ui/button";
-import { Loader2, Plus } from "lucide-react";
+import { Loader, Plus } from "lucide-react";
 import { toast } from "sonner";
 import VideoUploadModal from "./VideoUploadModal";
 import StudioUploader from "../studio/StudioUploader";
+import { useRouter } from "next/navigation";
 
 const StudioUploadModal = () => {
+  const router = useRouter();
   const utils = trpc.useUtils();
   const create = trpc.videos.create.useMutation({
     onSuccess: () => {
@@ -18,6 +21,13 @@ const StudioUploadModal = () => {
     },
   });
 
+  const onSuccess = () => {
+    if (!create.data?.video.id) return;
+
+    create.reset();
+    router.push(`/studio/video/${create.data?.video.id}`);
+  };
+
   return (
     <>
       <VideoUploadModal
@@ -26,9 +36,9 @@ const StudioUploadModal = () => {
         onOpenChange={() => create.reset()}
       >
         {create.data?.url ? (
-          <StudioUploader endpoint={create.data?.url} onSuccess={() => {}} />
+          <StudioUploader endpoint={create.data?.url} onSuccess={onSuccess} />
         ) : (
-          <Loader2 />
+          <Loader />
         )}
       </VideoUploadModal>
       <Button
@@ -36,7 +46,7 @@ const StudioUploadModal = () => {
         onClick={() => create.mutate()}
         disabled={create.isPending}
       >
-        {create.isPending ? <Loader2 className="animate-spin" /> : <Plus />}
+        {create.isPending ? <Loader className="animate-spin" /> : <Plus />}
         Create
       </Button>
     </>

@@ -27,18 +27,20 @@ const StudioSidebarHeader = () => {
   }
 
   if (state === "collapsed") {
-    <SidebarMenuItem>
-      <SidebarMenuButton tooltip="Your profile" asChild>
-        <Link href="/users/current">
-          <UserAvatar
-            imageUrl={user.imageUrl}
-            name={user.fullName ?? "User"}
-            size="xs"
-          />
-          <span className="text-sm">Your Profile</span>
-        </Link>
-      </SidebarMenuButton>
-    </SidebarMenuItem>;
+    return (
+      <SidebarMenuItem>
+        <SidebarMenuButton tooltip="Your profile" asChild>
+          <Link href="/users/current">
+            <UserAvatar
+              imageUrl={user.imageUrl}
+              name={user.fullName ?? "User"}
+              size="xs"
+            />
+            <span className="text-sm">Your Profile</span>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
   }
 
   return (
