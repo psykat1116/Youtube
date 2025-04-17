@@ -1,6 +1,7 @@
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 import { drizzle } from "drizzle-orm/neon-http";
+import Mux from "@mux/mux-node";
 
 export const db = drizzle(process.env.DATABASE_URL!);
 
@@ -14,4 +15,9 @@ export const ratelimit = new Ratelimit({
   limiter: Ratelimit.slidingWindow(20, "10s"),
   prefix: "@upstash/ratelimit",
   analytics: true,
+});
+
+export const mux = new Mux({
+  tokenId: process.env.MUX_TOKEN,
+  tokenSecret: process.env.MUX_SECRET_KEY,
 });
