@@ -2,19 +2,19 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from "../ui/drawer";
 
-interface VideoUploadModalProps {
+interface ResponsiveModalProps {
   children: React.ReactNode;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
 }
 
-const VideoUploadModal = ({
+const ResponsiveModal = ({
   children,
   onOpenChange,
   open,
   title,
-}: VideoUploadModalProps) => {
+}: ResponsiveModalProps) => {
   const isMobile = useIsMobile();
 
   if (isMobile) {
@@ -42,4 +42,4 @@ const VideoUploadModal = ({
   );
 };
 
-export default VideoUploadModal;
+export default ResponsiveModal;

@@ -34,10 +34,12 @@ async function main() {
   try {
     console.log("Seeding categories...");
 
-    const values = categoryNames.map((name) => ({
-      name,
-      description: `Video related to ${name}`,
-    }));
+    const values = categoryNames
+      .map((name) => ({
+        name,
+        description: `Video related to ${name}`,
+      }))
+      .toSorted((a, b) => a.name.localeCompare(b.name));
 
     await db.insert(categories).values(values);
 

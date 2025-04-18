@@ -4,7 +4,7 @@ import { trpc } from "@/trpc/client";
 import { Button } from "../ui/button";
 import { Loader, Plus } from "lucide-react";
 import { toast } from "sonner";
-import VideoUploadModal from "./VideoUploadModal";
+import ResponsiveModal from "./ResponsiveModal";
 import StudioUploader from "../studio/StudioUploader";
 import { useRouter } from "next/navigation";
 
@@ -30,7 +30,7 @@ const StudioUploadModal = () => {
 
   return (
     <>
-      <VideoUploadModal
+      <ResponsiveModal
         title="Upload a video"
         open={!!create.data?.url}
         onOpenChange={() => create.reset()}
@@ -40,7 +40,7 @@ const StudioUploadModal = () => {
         ) : (
           <Loader />
         )}
-      </VideoUploadModal>
+      </ResponsiveModal>
       <Button
         variant="secondary"
         onClick={() => create.mutate()}
