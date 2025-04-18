@@ -16,9 +16,7 @@ import {
   ImagePlus,
   Loader,
   Lock,
-  MoreVertical,
   RotateCcw,
-  Sparkles,
   Trash,
 } from "lucide-react";
 import {
@@ -35,7 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
   SelectContent,
-} from "../ui/select";
+} from "@/components/ui/select";
 import { videoUpdateSchema } from "@/db/schema";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
@@ -45,20 +43,67 @@ import Link from "next/link";
 import { snakeCaseToTitle } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import ThumbnailUploadModal from "../modal/ThumbnailUploadModal";
+import { Skeleton } from "../ui/skeleton";
 
 interface FormSectionProps {
   videoId: string;
 }
 
 const FormSectionSkeleton = () => {
-  return <p>Loading..</p>;
+  return (
+    <div className="h-full mb-5">
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold">Video Details</h1>
+          <p className="text-xs text-muted-foreground">
+            Manage your video details
+          </p>
+        </div>
+        <div className="flex items-center gap-x-2">
+          <Skeleton className="h-8 w-16" />
+          <Skeleton className="w-8 h-8" />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="space-y-8 lg:col-span-3">
+          <div className="flex flex-col gap-y-2">
+            <Skeleton className="h-5 w-16" />
+            <Skeleton className="h-10 w-full" />
+          </div>
+          <div className="flex flex-col gap-y-2">
+            <Skeleton className="h-5 w-16" />
+            <Skeleton className="h-30 w-full" />
+          </div>
+          <div className="flex flex-col gap-y-2">
+            <Skeleton className="h-5 w-16" />
+            <Skeleton className="h-20 w-32" />
+          </div>
+        </div>
+        <div className="flex flex-col gap-y-2 lg:col-span-2 bg-[#f9f9f9] rounded-xl overflow-hidden h-fit pb-4">
+          <div className="aspect-video overflow-hidden relative">
+            <Skeleton className="h-full w-full" />
+          </div>
+          <div className="px-4 py-2 flex flex-col">
+            <div className="flex justify-between flex-col gap-y-2">
+              <Skeleton className="h-5 w-16" />
+              <div className="flex items-center gap-x-2 border pl-2 border-black/50 rounded-sm">
+                <Skeleton className="h-8 w-32" />
+              </div>
+            </div>
+          </div>
+          <div className="px-4 flex justify-between w-full gap-y-2 items-center flex-col">
+            <Skeleton className="h-5 w-16" />
+            <Skeleton className="h-5 w-16" />
+          </div>
+          <div className="flex flex-col gap-y-4 p-4">
+            <Skeleton className="h-5 w-full" />
+            <Skeleton className="h-5 w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const FormSection = ({ videoId }: FormSectionProps) => {
@@ -66,7 +111,7 @@ const FormSection = ({ videoId }: FormSectionProps) => {
   const utils = trpc.useUtils();
   const fullUrl = `${
     process.env.VERCEL_URL || "http://localhost:3000"
-  }/video/${videoId}`;
+  }/watch/${videoId}`;
   const [isCopied, setIsCopied] = useState(false);
   const [thumbnailOpen, setThumbnailOpen] = useState(false);
 
@@ -204,106 +249,36 @@ const FormSection = ({ videoId }: FormSectionProps) => {
                     <FormItem>
                       <FormLabel>Thumbnail</FormLabel>
                       <FormControl>
-                        <div className="p-0.5 border border-dashed border-neutral-400 relative h-40 aspect-video group">
+                        <div className="relative group flex gap-x-2">
                           <Image
-                            fill
+                            height={150}
+                            width={350}
                             alt="Thumnail"
                             src={video.thumbnailUrl ?? "/Thumbnail.svg"}
+                            className="aspect-video object-cover p-0.5 border border-dashed border-neutral-400"
                           />
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                type="button"
-                                size="icon"
-                                className="bg-black/50 hover:bg-black/50 absolute top-1 right-1 rounded-full md:opacity-0 opacity-100 group-hover:opacity-100 duration-300 size-7"
-                              >
-                                <MoreVertical className="text-white" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="start" side="right">
-                              <DropdownMenuItem
-                                onClick={() => setThumbnailOpen(true)}
-                              >
-                                <ImagePlus className="size-4 mr-1" />
-                                Change
-                              </DropdownMenuItem>
-                              <DropdownMenuItem>
-                                <Sparkles className="size-4 mr-1" />
-                                AI Generated
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                onClick={() =>
-                                  restoreThumbnail.mutate({ id: videoId })
-                                }
-                              >
-                                <RotateCcw className="size-4 mr-1" />
-                                Restore
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
+                          <div className="flex flex-col gap-y-2 group-hover:opacity-100 opacity-0 transition-all duration-300">
+                            <Button
+                              className="flex items-center justify-between"
+                              onClick={() => setThumbnailOpen(true)}
+                              variant="secondary"
+                            >
+                              <ImagePlus className="size-4 mr-1" />
+                              Change
+                            </Button>
+                            <Button
+                              onClick={() =>
+                                restoreThumbnail.mutate({ id: videoId })
+                              }
+                              variant="secondary"
+                              className="flex items-center justify-between"
+                            >
+                              <RotateCcw className="size-4 mr-1" />
+                              Restore
+                            </Button>
+                          </div>
                         </div>
                       </FormControl>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="categoryId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Category</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value || undefined}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a category" />
-                          </SelectTrigger>
-                          <SelectContent className="w-full">
-                            {categories.map((c) => (
-                              <SelectItem key={c.id} value={c.id}>
-                                {c.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="visibility"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Visibility</FormLabel>
-                      <FormControl>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value || undefined}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select Visibility" />
-                          </SelectTrigger>
-                          <SelectContent className="w-full">
-                            <SelectItem value="public">
-                              <div className="flex items-center gap-1">
-                                <Globe className="size-4 mr-2" />
-                                Public
-                              </div>
-                            </SelectItem>
-                            <SelectItem value="private">
-                              <div className="flex items-center gap-1">
-                                <Lock className="size-4 mr-2" />
-                                Private
-                              </div>
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -319,7 +294,7 @@ const FormSection = ({ videoId }: FormSectionProps) => {
                   <div className="flex justify-between flex-col gap-y-2">
                     <p className="text-muted-foreground text-sm">Video URL</p>
                     <div className="flex items-center gap-x-2 border pl-2 border-black/50 rounded-sm">
-                      <Link href={`/videos/${video.id}`}>
+                      <Link href={`/watch/${video.id}`}>
                         <p className="line-clamp-1 text-sm text-blue-500">
                           {fullUrl}
                         </p>
@@ -372,6 +347,69 @@ const FormSection = ({ videoId }: FormSectionProps) => {
                       {snakeCaseToTitle(video.muxTrackStatus || "no_subtitles")}
                     </div>
                   </div>
+                </div>
+                <div className="flex flex-col gap-y-4 p-4">
+                  <FormField
+                    control={form.control}
+                    name="categoryId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormControl>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value || undefined}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select a category" />
+                            </SelectTrigger>
+                            <SelectContent className="w-full">
+                              {categories.map((c) => (
+                                <SelectItem key={c.id} value={c.id}>
+                                  {c.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="visibility"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Visibility</FormLabel>
+                        <FormControl>
+                          <Select
+                            onValueChange={field.onChange}
+                            defaultValue={field.value || undefined}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select Visibility" />
+                            </SelectTrigger>
+                            <SelectContent className="w-full">
+                              <SelectItem value="public">
+                                <div className="flex items-center gap-1">
+                                  <Globe className="size-4 mr-2" />
+                                  Public
+                                </div>
+                              </SelectItem>
+                              <SelectItem value="private">
+                                <div className="flex items-center gap-1">
+                                  <Lock className="size-4 mr-2" />
+                                  Private
+                                </div>
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
             </div>
