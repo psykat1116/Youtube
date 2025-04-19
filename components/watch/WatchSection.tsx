@@ -7,15 +7,32 @@ import { ErrorBoundary } from "react-error-boundary";
 import VideoPlayer from "../video/VideoPlayer";
 import WatchBanner from "./WatchBanner";
 import WatchTopRow from "./WatchTopRow";
+import { useAuth } from "@clerk/nextjs";
 
 interface WatchSectionProps {
   videoId: string;
 }
 
 const WatchSection = ({ videoId }: WatchSectionProps) => {
+  const { isSignedIn } = useAuth();
+  const utils = trpc.useUtils();
   const [video] = trpc.videos.getOne.useSuspenseQuery({
     id: videoId,
   });
+
+  const createView = trpc.views.create.useMutation({
+    onSuccess: () => {
+      utils.videos.getOne.invalidate({ id: videoId });
+    },
+  });
+
+  const handlePlay = () => {
+    if (isSignedIn) {
+      createView.mutate({
+        videoId,
+      });
+    }
+  };
 
   return (
     <Suspense fallback={<div className="text-center">Loading...</div>}>
@@ -30,13 +47,13 @@ const WatchSection = ({ videoId }: WatchSectionProps) => {
         >
           <VideoPlayer
             autoPlay
-            onPlay={() => {}}
+            onPlay={handlePlay}
             playbackId={video.muxPlaybackId}
             posterUrl={video.thumbnailUrl}
           />
         </div>
         <WatchBanner status={video.muxStatus} />
-        <WatchTopRow video={video}/>
+        <WatchTopRow video={video} />
       </ErrorBoundary>
     </Suspense>
   );

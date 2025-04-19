@@ -1,12 +1,19 @@
 import { db, mux } from "@/db";
-import { users, videos, videoUpdateSchema } from "@/db/schema";
+import {
+  reactions,
+  subscriptions,
+  users,
+  videos,
+  videoUpdateSchema,
+  views,
+} from "@/db/schema";
 import {
   baseProcedure,
   createTRPCRouter,
   protectedProcedure,
 } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
-import { and, eq, getTableColumns } from "drizzle-orm";
+import { and, eq, getTableColumns, inArray, isNotNull } from "drizzle-orm";
 import { UTApi } from "uploadthing/server";
 import { z } from "zod";
 
@@ -131,7 +138,7 @@ export const videosRouter = createTRPCRouter({
         });
       }
 
-      const thumbnailUrl = `https://image.mux.com/${existingVideo.muxPlaybackId}/thumnail.jpg`;
+      const thumbnailUrl = `https://image.mux.com/${existingVideo.muxPlaybackId}/thumbnail.jpg`;
       const [restoredVideo] = await db
         .update(videos)
         .set({
@@ -144,16 +151,65 @@ export const videosRouter = createTRPCRouter({
     }),
   getOne: baseProcedure
     .input(z.object({ id: z.string().uuid() }))
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
+      const { clerkId } = ctx;
+      let userId;
+
+      const [user] = await db
+        .select()
+        .from(users)
+        .where(inArray(users.clerkId, clerkId ? [clerkId] : []));
+
+      if (user) {
+        userId = user.id;
+      }
+
+      // ? Common Table Expressions (CTE) to get the user reaction
+      const userReaction = db.$with("user_reaction").as(
+        db
+          .select({
+            videoId: reactions.videoId,
+            type: reactions.type,
+          })
+          .from(reactions)
+          .where(inArray(reactions.userId, userId ? [userId] : []))
+      );
+
+      // ? Common Table Expressions (CTE) to get the user subscription
+      const userSubscription = db.$with("user_subscription").as(
+        db
+          .select()
+          .from(subscriptions)
+          .where(inArray(subscriptions.viewerId, userId ? [userId] : []))
+      );
+
       const [existingVideo] = await db
+        .with(userReaction, userSubscription)
         .select({
           ...getTableColumns(videos),
           user: {
             ...getTableColumns(users),
+            subscriberCount: db.$count(
+              subscriptions,
+              eq(subscriptions.creatorId, users.id)
+            ),
+            isSubscribed: isNotNull(userSubscription.viewerId).mapWith(Boolean),
           },
+          viewCount: db.$count(views, eq(views.videoId, videos.id)),
+          likeCount: db.$count(
+            reactions,
+            and(eq(reactions.videoId, videos.id), eq(reactions.type, "like"))
+          ),
+          dislikeCount: db.$count(
+            reactions,
+            and(eq(reactions.videoId, videos.id), eq(reactions.type, "dislike"))
+          ),
+          userReaction: userReaction.type,
         })
         .from(videos)
         .innerJoin(users, eq(users.id, videos.userId))
+        .leftJoin(userReaction, eq(userReaction.videoId, videos.id))
+        .leftJoin(userSubscription, eq(userSubscription.creatorId, users.id))
         .where(eq(videos.id, input.id));
 
       if (!existingVideo) {
