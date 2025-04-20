@@ -4,14 +4,23 @@ import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import VideoPlayer from "../video/VideoPlayer";
+import VideoPlayer, { VideoPlayerSkeleton } from "../video/VideoPlayer";
 import WatchBanner from "./WatchBanner";
-import WatchTopRow from "./WatchTopRow";
+import WatchTopRow, { WatchTopRowSkeleton } from "./WatchTopRow";
 import { useAuth } from "@clerk/nextjs";
 
 interface WatchSectionProps {
   videoId: string;
 }
+
+const WatchSectionSkeleton = () => {
+  return (
+    <>
+      <VideoPlayerSkeleton />
+      <WatchTopRowSkeleton />
+    </>
+  );
+};
 
 const WatchSection = ({ videoId }: WatchSectionProps) => {
   const { isSignedIn } = useAuth();
@@ -35,7 +44,7 @@ const WatchSection = ({ videoId }: WatchSectionProps) => {
   };
 
   return (
-    <Suspense fallback={<div className="text-center">Loading...</div>}>
+    <Suspense fallback={<WatchSectionSkeleton />}>
       <ErrorBoundary
         fallback={<div className="text-center">Something went wrong</div>}
       >

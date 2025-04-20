@@ -1,9 +1,62 @@
-import React from 'react'
+"use client";
 
-const CommentSection = () => {
-  return (
-    <div>CommentSection</div>
-  )
+import { trpc } from "@/trpc/client";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import CommentForm from "../comment/CommentForm";
+import CommentItem from "../comment/CommentItem";
+import InfiniteScroll from "../InfiniteScroll";
+import { Loader } from "lucide-react";
+
+interface CommentSectionProps {
+  videoId: string;
 }
 
-export default CommentSection
+const CommentSectionSkeleton = () => {
+  return (
+    <div className="mt-6 flex justify-center items-center">
+      <Loader className="text-muted-foreground size-7 animate-spin" />
+    </div>
+  );
+};
+
+const CommentSection = ({ videoId }: CommentSectionProps) => {
+  const [comments, query] = trpc.comments.getMany.useSuspenseInfiniteQuery(
+    {
+      videoId,
+      limit: 10,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
+  );
+
+  return (
+    <Suspense fallback={<CommentSectionSkeleton />}>
+      <ErrorBoundary fallback={<p>Error...</p>}>
+        <div className="mt-6">
+          <div className="flex flex-col gap-6">
+            <h1 className="font-semibold">
+              {comments.pages[0].commentCount} Comments
+            </h1>
+            <CommentForm onSuccess={() => {}} videoId={videoId} />
+          </div>
+          <div className="flex flex-col gap-4 mt-2">
+            {comments.pages
+              .flatMap((page) => page.items)
+              .map((comment) => (
+                <CommentItem key={comment.id} comment={comment} />
+              ))}
+            <InfiniteScroll
+              hasNextPage={query.hasNextPage}
+              isFetchingNextPage={query.isFetchingNextPage}
+              fetchNextPage={query.fetchNextPage}
+            />
+          </div>
+        </div>
+      </ErrorBoundary>
+    </Suspense>
+  );
+};
+
+export default CommentSection;

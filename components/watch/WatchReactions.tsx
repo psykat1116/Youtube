@@ -24,7 +24,7 @@ const WatchReactions = ({
   const clerk = useClerk();
   const utils = trpc.useUtils();
 
-  const likeMutation = trpc.reactions.like.useMutation({
+  const likeMutation = trpc.videoReactions.like.useMutation({
     onSuccess: () => {
       utils.videos.getOne.invalidate({ id: videoId });
       // TODO: Invalidate Liked Playlists
@@ -38,7 +38,7 @@ const WatchReactions = ({
     },
   });
 
-  const dislikeMutation = trpc.reactions.dislike.useMutation({
+  const dislikeMutation = trpc.videoReactions.dislike.useMutation({
     onSuccess: () => {
       utils.videos.getOne.invalidate({ id: videoId });
     },

@@ -1,39 +1,39 @@
 import { db } from "@/db";
-import { reactions } from "@/db/schema";
+import { commentReactions } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { and, eq } from "drizzle-orm";
 import { z } from "zod";
 
-export const reactionRouter = createTRPCRouter({
+export const commentReactionRouter = createTRPCRouter({
   like: protectedProcedure
     .input(
       z.object({
-        videoId: z.string().uuid(),
+        commentId: z.string().uuid(),
       })
     )
     .mutation(async ({ input, ctx }) => {
       const { id: userId } = ctx.data;
-      const { videoId } = input;
+      const { commentId } = input;
 
       const [existingReaction] = await db
         .select()
-        .from(reactions)
+        .from(commentReactions)
         .where(
           and(
-            eq(reactions.userId, userId),
-            eq(reactions.videoId, videoId),
-            eq(reactions.type, "like")
+            eq(commentReactions.userId, userId),
+            eq(commentReactions.commentId, commentId),
+            eq(commentReactions.type, "like")
           )
         );
 
       if (existingReaction) {
         const [deletedReaction] = await db
-          .delete(reactions)
+          .delete(commentReactions)
           .where(
             and(
-              eq(reactions.userId, userId),
-              eq(reactions.videoId, videoId),
-              eq(reactions.type, "like")
+              eq(commentReactions.userId, userId),
+              eq(commentReactions.commentId, commentId),
+              eq(commentReactions.type, "like")
             )
           )
           .returning();
@@ -42,14 +42,14 @@ export const reactionRouter = createTRPCRouter({
       }
 
       const [newReaction] = await db
-        .insert(reactions)
+        .insert(commentReactions)
         .values({
           userId,
-          videoId,
+          commentId,
           type: "like",
         })
         .onConflictDoUpdate({
-          target: [reactions.userId, reactions.videoId],
+          target: [commentReactions.userId, commentReactions.commentId],
           set: {
             type: "like",
           },
@@ -61,32 +61,32 @@ export const reactionRouter = createTRPCRouter({
   dislike: protectedProcedure
     .input(
       z.object({
-        videoId: z.string().uuid(),
+        commentId: z.string().uuid(),
       })
     )
     .mutation(async ({ input, ctx }) => {
       const { id: userId } = ctx.data;
-      const { videoId } = input;
+      const { commentId } = input;
 
       const [existingReaction] = await db
         .select()
-        .from(reactions)
+        .from(commentReactions)
         .where(
           and(
-            eq(reactions.userId, userId),
-            eq(reactions.videoId, videoId),
-            eq(reactions.type, "dislike")
+            eq(commentReactions.userId, userId),
+            eq(commentReactions.commentId, commentId),
+            eq(commentReactions.type, "dislike")
           )
         );
 
       if (existingReaction) {
         const [deletedReaction] = await db
-          .delete(reactions)
+          .delete(commentReactions)
           .where(
             and(
-              eq(reactions.userId, userId),
-              eq(reactions.videoId, videoId),
-              eq(reactions.type, "dislike")
+              eq(commentReactions.userId, userId),
+              eq(commentReactions.commentId, commentId),
+              eq(commentReactions.type, "dislike")
             )
           )
           .returning();
@@ -95,14 +95,14 @@ export const reactionRouter = createTRPCRouter({
       }
 
       const [newReaction] = await db
-        .insert(reactions)
+        .insert(commentReactions)
         .values({
           userId,
-          videoId,
-          type: "like",
+          commentId,
+          type: "dislike",
         })
         .onConflictDoUpdate({
-          target: [reactions.userId, reactions.videoId],
+          target: [commentReactions.userId, commentReactions.commentId],
           set: {
             type: "dislike",
           },

@@ -15,7 +15,6 @@ interface WatchMenuProps {
   onRemove?: () => void;
 }
 
-// TODO: Add the actual video reaction state or prop
 const WatchMenu = ({ videoId, variant, onRemove }: WatchMenuProps) => {
   const handleShare = () => {
     const fullUrl = `${

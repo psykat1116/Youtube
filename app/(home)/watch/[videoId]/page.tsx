@@ -12,6 +12,8 @@ interface VideoIDPageProps {
 const VideoIDPage = async ({ params }: VideoIDPageProps) => {
   const { videoId } = await params;
   void trpc.videos.getOne.prefetch({ id: videoId });
+  // TODO: change to prefetchInfiniteQuery when we have infinite scroll
+  void trpc.comments.getMany.prefetchInfinite({ videoId, limit: 10 });
 
   return (
     <HydrateClient>

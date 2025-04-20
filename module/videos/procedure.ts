@@ -1,6 +1,6 @@
 import { db, mux } from "@/db";
 import {
-  reactions,
+  videoReactions,
   subscriptions,
   users,
   videos,
@@ -168,11 +168,11 @@ export const videosRouter = createTRPCRouter({
       const userReaction = db.$with("user_reaction").as(
         db
           .select({
-            videoId: reactions.videoId,
-            type: reactions.type,
+            videoId: videoReactions.videoId,
+            type: videoReactions.type,
           })
-          .from(reactions)
-          .where(inArray(reactions.userId, userId ? [userId] : []))
+          .from(videoReactions)
+          .where(inArray(videoReactions.userId, userId ? [userId] : []))
       );
 
       // ? Common Table Expressions (CTE) to get the user subscription
@@ -180,7 +180,7 @@ export const videosRouter = createTRPCRouter({
         db
           .select()
           .from(subscriptions)
-          .where(inArray(subscriptions.viewerId, userId ? [userId] : []))
+          .where(inArray(subscriptions.viewer, userId ? [userId] : []))
       );
 
       const [existingVideo] = await db
@@ -191,25 +191,25 @@ export const videosRouter = createTRPCRouter({
             ...getTableColumns(users),
             subscriberCount: db.$count(
               subscriptions,
-              eq(subscriptions.creatorId, users.id)
+              eq(subscriptions.creator, users.id)
             ),
-            isSubscribed: isNotNull(userSubscription.viewerId).mapWith(Boolean),
+            isSubscribed: isNotNull(userSubscription.viewer).mapWith(Boolean),
           },
           viewCount: db.$count(views, eq(views.videoId, videos.id)),
           likeCount: db.$count(
-            reactions,
-            and(eq(reactions.videoId, videos.id), eq(reactions.type, "like"))
+            videoReactions,
+            and(eq(videoReactions.videoId, videos.id), eq(videoReactions.type, "like"))
           ),
           dislikeCount: db.$count(
-            reactions,
-            and(eq(reactions.videoId, videos.id), eq(reactions.type, "dislike"))
+            videoReactions,
+            and(eq(videoReactions.videoId, videos.id), eq(videoReactions.type, "dislike"))
           ),
           userReaction: userReaction.type,
         })
         .from(videos)
         .innerJoin(users, eq(users.id, videos.userId))
         .leftJoin(userReaction, eq(userReaction.videoId, videos.id))
-        .leftJoin(userSubscription, eq(userSubscription.creatorId, users.id))
+        .leftJoin(userSubscription, eq(userSubscription.creator, users.id))
         .where(eq(videos.id, input.id));
 
       if (!existingVideo) {
