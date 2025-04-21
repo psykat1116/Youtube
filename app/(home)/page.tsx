@@ -2,7 +2,6 @@ import HomeView from "@/components/home/HomeView";
 import { HydrateClient, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";
-
 interface HomePageProps {
   searchParams: Promise<{
     categoryId?: string;

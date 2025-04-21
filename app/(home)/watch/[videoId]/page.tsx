@@ -1,4 +1,5 @@
 import WatchView from "@/components/watch/WatchView";
+import { DEFAULT_LIMIT } from "@/constant";
 import { HydrateClient, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";
@@ -12,8 +13,8 @@ interface VideoIDPageProps {
 const VideoIDPage = async ({ params }: VideoIDPageProps) => {
   const { videoId } = await params;
   void trpc.videos.getOne.prefetch({ id: videoId });
-  // TODO: change to prefetchInfiniteQuery when we have infinite scroll
-  void trpc.comments.getMany.prefetchInfinite({ videoId, limit: 10 });
+  void trpc.comments.getMany.prefetchInfinite({ videoId, limit: DEFAULT_LIMIT });
+  void trpc.suggestions.getMany.prefetchInfinite({ videoId, limit: DEFAULT_LIMIT });
 
   return (
     <HydrateClient>

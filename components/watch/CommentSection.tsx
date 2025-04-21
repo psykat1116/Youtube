@@ -7,6 +7,7 @@ import CommentForm from "../comment/CommentForm";
 import CommentItem from "../comment/CommentItem";
 import InfiniteScroll from "../InfiniteScroll";
 import { Loader } from "lucide-react";
+import { DEFAULT_LIMIT } from "@/constant";
 
 interface CommentSectionProps {
   videoId: string;
@@ -24,7 +25,7 @@ const CommentSection = ({ videoId }: CommentSectionProps) => {
   const [comments, query] = trpc.comments.getMany.useSuspenseInfiniteQuery(
     {
       videoId,
-      limit: 10,
+      limit: DEFAULT_LIMIT,
     },
     {
       getNextPageParam: (lastPage) => lastPage.nextCursor,

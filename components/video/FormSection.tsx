@@ -16,6 +16,7 @@ import {
   ImagePlus,
   Loader,
   Lock,
+  RefreshCcw,
   RotateCcw,
   Trash,
 } from "lucide-react";
@@ -109,9 +110,9 @@ const FormSectionSkeleton = () => {
 const FormSection = ({ videoId }: FormSectionProps) => {
   const router = useRouter();
   const utils = trpc.useUtils();
-  const fullUrl = `${
-    process.env.VERCEL_URL || "http://localhost:3000"
-  }/watch/${videoId}`;
+  const fullUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}/watch/${videoId}`
+    : `http://localhost:3000/watch/${videoId}`;
   const [isCopied, setIsCopied] = useState(false);
   const [thumbnailOpen, setThumbnailOpen] = useState(false);
 
@@ -135,6 +136,15 @@ const FormSection = ({ videoId }: FormSectionProps) => {
       router.push("/studio");
       utils.studio.getMany.invalidate();
       toast.success("Video Deleted Successfully");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+  const revaildate = trpc.videos.revalidate.useMutation({
+    onSuccess: () => {
+      utils.studio.getMany.invalidate();
+      utils.studio.getOne.invalidate({ id: videoId });
     },
     onError: (error) => {
       toast.error(error.message);
@@ -197,6 +207,14 @@ const FormSection = ({ videoId }: FormSectionProps) => {
                   disabled={remove.isPending}
                 >
                   <Trash className="size-4" />
+                </Button>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  onClick={() => revaildate.mutate({ id: videoId })}
+                  disabled={revaildate.isPending}
+                >
+                  <RefreshCcw className="size-4" />
                 </Button>
               </div>
             </div>

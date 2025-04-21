@@ -15,15 +15,19 @@ interface WatchMenuProps {
   onRemove?: () => void;
 }
 
-const WatchMenu = ({ videoId, variant, onRemove }: WatchMenuProps) => {
+const WatchMenu = ({
+  videoId,
+  variant = "ghost",
+  onRemove,
+}: WatchMenuProps) => {
   const handleShare = () => {
-    const fullUrl = `${
-      process.env.VERCEL_URL || "http://localhost:3000"
-    }/watch/${videoId}`;
+    const fullUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}/watch/${videoId}`
+      : `http://localhost:3000/watch/${videoId}`;
+
     navigator.clipboard.writeText(fullUrl).then(() => {
-      alert("Link copied to clipboard!");
+      toast.success("Link Copied");
     });
-    toast.success("Link Copied");
   };
 
   return (

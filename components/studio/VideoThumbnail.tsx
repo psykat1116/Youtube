@@ -1,6 +1,7 @@
 import { formatDuartion } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
+import { Skeleton } from "../ui/skeleton";
 
 interface VideoThumbnailProps {
   imageUrl?: string | null;
@@ -8,6 +9,14 @@ interface VideoThumbnailProps {
   title: string;
   duration: number;
 }
+
+export const VideoThumbnailSkeleton = () => {
+  return (
+    <div className="relative w-full overflow-hidden rounded-xl aspect-video">
+      <Skeleton className="size-full" />
+    </div>
+  );
+};
 
 const VideoThumbnail = ({
   title,

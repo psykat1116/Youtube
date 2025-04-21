@@ -1,7 +1,6 @@
-import React from "react";
 import WatchSection from "./WatchSection";
-import SuggestionSection from "./SuggestionSection";
 import CommentSection from "./CommentSection";
+import SuggestionSection from "./SuggestionSection";
 
 interface WatchViewProps {
   videoId: string;
@@ -14,12 +13,12 @@ const WatchView = ({ videoId }: WatchViewProps) => {
         <div className="flex-1 min-w-0">
           <WatchSection videoId={videoId} />
           <div className="xl:hidden block mt-4">
-            <SuggestionSection />
+            <SuggestionSection videoId={videoId} isManual />
           </div>
           <CommentSection videoId={videoId} />
         </div>
         <div className="hidden xl:block w-full xl:w-[380px] 2xl:w-[460px] shrink-1">
-          <SuggestionSection />
+          <SuggestionSection videoId={videoId} />
         </div>
       </div>
     </div>

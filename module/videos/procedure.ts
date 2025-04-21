@@ -198,11 +198,17 @@ export const videosRouter = createTRPCRouter({
           viewCount: db.$count(views, eq(views.videoId, videos.id)),
           likeCount: db.$count(
             videoReactions,
-            and(eq(videoReactions.videoId, videos.id), eq(videoReactions.type, "like"))
+            and(
+              eq(videoReactions.videoId, videos.id),
+              eq(videoReactions.type, "like")
+            )
           ),
           dislikeCount: db.$count(
             videoReactions,
-            and(eq(videoReactions.videoId, videos.id), eq(videoReactions.type, "dislike"))
+            and(
+              eq(videoReactions.videoId, videos.id),
+              eq(videoReactions.type, "dislike")
+            )
           ),
           userReaction: userReaction.type,
         })
@@ -220,5 +226,61 @@ export const videosRouter = createTRPCRouter({
       }
 
       return existingVideo;
+    }),
+  revalidate: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.data;
+
+      const [existingVideo] = await db
+        .select()
+        .from(videos)
+        .where(and(eq(videos.id, input.id), eq(videos.userId, userId)));
+
+      if (!existingVideo) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Video not found",
+        });
+      }
+
+      if (!existingVideo.muxUploadId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Missing Upload ID",
+        });
+      }
+
+      const directUpload = await mux.video.uploads.retrieve(
+        existingVideo.muxUploadId
+      );
+
+      if (!directUpload || !directUpload.asset_id) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Direct upload not found",
+        });
+      }
+
+      const asset = await mux.video.assets.retrieve(directUpload.asset_id);
+      if (!asset) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Asset not found",
+        });
+      }
+
+      const [updatedVideo] = await db
+        .update(videos)
+        .set({
+          muxStatus: asset.status,
+          muxPlaybackId: asset.playback_ids?.[0].id,
+          muxAssetId: asset.id,
+          duration: asset.duration ? Math.round(asset.duration) : 0,
+        })
+        .where(and(eq(videos.id, input.id), eq(videos.userId, userId)))
+        .returning();
+
+      return updatedVideo;
     }),
 });

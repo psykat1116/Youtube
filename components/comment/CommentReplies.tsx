@@ -3,6 +3,7 @@ import { CornerDownRight, Loader } from "lucide-react";
 import React from "react";
 import CommentItem from "./CommentItem";
 import { Button } from "../ui/button";
+import { DEFAULT_LIMIT } from "@/constant";
 
 interface CommentRepliesProps {
   parentId: string;
@@ -13,7 +14,7 @@ const CommentReplies = ({ parentId, videoId }: CommentRepliesProps) => {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     trpc.comments.getMany.useInfiniteQuery(
       {
-        limit: 10,
+        limit: DEFAULT_LIMIT,
         videoId,
         parentId,
       },

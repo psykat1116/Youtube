@@ -7,9 +7,12 @@ import { videoReactionRouter } from "@/module/videoreaction/procedure";
 import { subscriptionRouter } from "@/module/subscription/procedure";
 import { commentsRouter } from "@/module/comments/procedure";
 import { commentReactionRouter } from "@/module/commentreaction/procedure";
+import { suggestionsRouter } from "@/module/suggestions/procedures";
+import { searchRouter } from "@/module/search/procedures";
 
 export const appRouter = createTRPCRouter({
   studio: studioRouter,
+  search: searchRouter,
   videos: videosRouter,
   categories: categoriesRouter,
   views: viewRouter,
@@ -17,6 +20,7 @@ export const appRouter = createTRPCRouter({
   subscriptions: subscriptionRouter,
   comments: commentsRouter,
   commentReactions: commentReactionRouter,
+  suggestions: suggestionsRouter,
 });
 
 export type AppRouter = typeof appRouter;
