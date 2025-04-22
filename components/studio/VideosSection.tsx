@@ -94,13 +94,13 @@ const VideosSection = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="pl-6 w-[510px]">Video</TableHead>
+                  <TableHead className="pl-6 w-[480px]">Video</TableHead>
                   <TableHead>Visibility</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Views</TableHead>
-                  <TableHead className="text-right">Comments</TableHead>
-                  <TableHead className="text-right pr-6">Likes</TableHead>
+                  <TableHead>Views</TableHead>
+                  <TableHead>Comments</TableHead>
+                  <TableHead>Likes</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -132,7 +132,7 @@ const VideosSection = () => {
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="text-sm truncate">
                         <div className="flex items-center gap-2">
                           {video.visibility === "private" ? (
                             <Lock className="text-muted-foreground size-4" />
@@ -159,14 +159,20 @@ const VideosSection = () => {
                       <TableCell className="text-sm truncate">
                         {format(new Date(video.createdAt), "d MMM yyyy")}
                       </TableCell>
-                      <TableCell className="text-right text-sm">
-                        views
+                      <TableCell className="text-center text-sm">
+                        {Intl.NumberFormat("en-US", {
+                          notation: "compact",
+                        }).format(video.viewCount)}
                       </TableCell>
-                      <TableCell className="text-right text-sm">
-                        comments
+                      <TableCell className="text-center text-sm">
+                        {Intl.NumberFormat("en-US", {
+                          notation: "compact",
+                        }).format(video.commentCount)}
                       </TableCell>
-                      <TableCell className="text-right text-sm pr-6">
-                        likes
+                      <TableCell className="text-center text-sm pr-6">
+                        {Intl.NumberFormat("en-US", {
+                          notation: "compact",
+                        }).format(video.likeCount)}
                       </TableCell>
                     </TableRow>
                   ))}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,6 +8,7 @@ import {
 import { Button } from "../ui/button";
 import { ListPlus, MoreVertical, Share, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import PlaylistAddModal from "../modal/PlaylistAddModal";
 
 interface WatchMenuProps {
   videoId: string;
@@ -20,6 +21,8 @@ const WatchMenu = ({
   variant = "ghost",
   onRemove,
 }: WatchMenuProps) => {
+  const [open, setOpen] = useState(false);
+
   const handleShare = () => {
     const fullUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}/watch/${videoId}`
@@ -31,34 +34,37 @@ const WatchMenu = ({
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant={variant} size="icon" className="rounded-full">
-          <MoreVertical />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        <DropdownMenuItem onClick={handleShare}>
-          <Share className="mr-2 size-4" />
-          Share
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => {}}>
-          <ListPlus className="mr-2 size-4" />
-          Add To Playlist
-        </DropdownMenuItem>
-        {onRemove && (
-          <DropdownMenuItem onClick={() => {}}>
-            <Trash2 className="mr-2 size-4" />
-            Remove
+    <>
+      <PlaylistAddModal onOpenChange={setOpen} open={open} videoId={videoId}/>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant={variant} size="icon" className="rounded-full">
+            <MoreVertical />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="end"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <DropdownMenuItem onClick={handleShare}>
+            <Share className="mr-2 size-4" />
+            Share
           </DropdownMenuItem>
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            <ListPlus className="mr-2 size-4" />
+            Add To Playlist
+          </DropdownMenuItem>
+          {onRemove && (
+            <DropdownMenuItem onClick={onRemove}>
+              <Trash2 className="mr-2 size-4" />
+              Remove
+            </DropdownMenuItem>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 };
 

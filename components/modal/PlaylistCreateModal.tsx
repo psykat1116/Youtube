@@ -66,6 +66,7 @@ const PlaylistCreateModal = ({
   return (
     <ResponsiveModal
       title="Create a playlist"
+      description="Create a new playlist to organize your videos."
       open={open}
       onOpenChange={onOpenChange}
     >

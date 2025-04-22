@@ -24,6 +24,7 @@ const ThumbnailUploadModal = ({
   return (
     <ResponsiveModal
       title="Upload a thumbnail"
+      description="Upload a thumbnail for your video."
       onOpenChange={onOpenChange}
       open={open}
     >

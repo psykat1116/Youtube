@@ -32,6 +32,7 @@ const StudioUploadModal = () => {
     <>
       <ResponsiveModal
         title="Upload a video"
+        description="Upload a video to your channel."
         open={!!create.data?.url}
         onOpenChange={() => create.reset()}
       >

@@ -285,7 +285,7 @@ export const videosRouter = createTRPCRouter({
           muxStatus: asset.status,
           muxPlaybackId: asset.playback_ids?.[0].id,
           muxAssetId: asset.id,
-          duration: asset.duration ? Math.round(asset.duration) : 0,
+          duration: asset.duration ? Math.round(asset.duration * 1000) : 0,
         })
         .where(and(eq(videos.id, input.id), eq(videos.userId, userId)))
         .returning();

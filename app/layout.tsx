@@ -1,23 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TRPCProvider } from "@/trpc/client";
 import { Toaster } from "sonner";
 
-const roboto = Roboto({
-  subsets: [
-    "latin",
-    "latin-ext",
-    "greek",
-    "greek-ext",
-    "math",
-    "symbols",
-    "vietnamese",
-    "cyrillic",
-    "cyrillic-ext",
-  ],
+const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin", "latin-ext"],
   style: ["normal", "italic"],
 });
 
@@ -70,7 +60,7 @@ export default function RootLayout({
   return (
     <ClerkProvider afterSignOutUrl="/">
       <html lang="en">
-        <body className={`${roboto.className} antialiased`}>
+        <body className={`${poppins.className} antialiased`}>
           <TRPCProvider>
             <Toaster />
             {children}
