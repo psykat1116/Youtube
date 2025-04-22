@@ -1,6 +1,5 @@
 "use client";
 
-import { useIsMobile } from "@/hooks/use-mobile";
 import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
 import VideoRowCard, { VideoRowCardSkeleton } from "../video/VideoRowCard";
@@ -32,7 +31,6 @@ const ResultSectionSkeleton = () => {
 };
 
 const ResultSection = ({ query, categoryId }: ResultSectionProps) => {
-  const isMobile = useIsMobile();
   const [results, resultQuery] = trpc.search.getMany.useSuspenseInfiniteQuery(
     {
       query,
@@ -50,23 +48,20 @@ const ResultSection = ({ query, categoryId }: ResultSectionProps) => {
       fallback={<ResultSectionSkeleton />}
     >
       <ErrorBoundary fallback={<p>Error</p>}>
-        {isMobile ? (
-          <div className="flex flex-col gap-4 gap-y-10">
-            {results.pages
-              .flatMap((page) => page.items)
-              .map((item) => (
-                <VideoGridCard key={item.id} data={item} />
-              ))}
-          </div>
-        ) : (
-          <div className="flex-flex-col gap-4">
-            {results.pages
-              .flatMap((page) => page.items)
-              .map((item) => (
-                <VideoRowCard key={item.id} data={item} />
-              ))}
-          </div>
-        )}
+        <div className="flex flex-col gap-4 gap-y-10 md:hidden">
+          {results.pages
+            .flatMap((page) => page.items)
+            .map((item) => (
+              <VideoGridCard key={item.id} data={item} />
+            ))}
+        </div>
+        <div className="flex-col hidden md:flex gap-4">
+          {results.pages
+            .flatMap((page) => page.items)
+            .map((item) => (
+              <VideoRowCard key={item.id} data={item} />
+            ))}
+        </div>
         <InfiniteScroll
           hasNextPage={resultQuery.hasNextPage}
           isFetchingNextPage={resultQuery.isFetchingNextPage}

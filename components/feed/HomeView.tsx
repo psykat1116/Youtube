@@ -7,7 +7,7 @@ interface HomeViewProps {
 
 const HomeView = ({ categoryId }: HomeViewProps) => {
   return (
-    <div className="max-w-[2440px] mx-auto mb-10 px-4 pt-2.5 flex flex-col gap-y-6">
+    <div className="max-w-[2400px] mx-auto mb-10 px-4 pt-2.5 flex flex-col gap-y-6">
       <CategoryBar categoryId={categoryId} />
       <HomeVideoSection categoryId={categoryId} />
     </div>

@@ -1,4 +1,4 @@
-import HomeView from "@/components/home/HomeView";
+import HomeView from "@/components/feed/HomeView";
 import { DEFAULT_LIMIT } from "@/constant";
 import { HydrateClient, trpc } from "@/trpc/server";
 

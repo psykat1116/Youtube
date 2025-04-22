@@ -10,3 +10,6 @@ export type CommentGetManyOutput =
 // TODO: Change to videos getmany
 export type VideoGetManyOutput =
   inferRouterOutputs<AppRouter>["suggestions"]["getMany"];
+
+export type PlaylistGetManyOutput =
+  inferRouterOutputs<AppRouter>["playlists"]["getMany"];

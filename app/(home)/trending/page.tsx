@@ -1,4 +1,4 @@
-import TrendingView from "@/components/home/TrendingView";
+import TrendingView from "@/components/feed/TrendingView";
 import { DEFAULT_LIMIT } from "@/constant";
 import { HydrateClient, trpc } from "@/trpc/server";
 

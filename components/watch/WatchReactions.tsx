@@ -27,7 +27,7 @@ const WatchReactions = ({
   const likeMutation = trpc.videoReactions.like.useMutation({
     onSuccess: () => {
       utils.videos.getOne.invalidate({ id: videoId });
-      // TODO: Invalidate Liked Playlists
+      utils.playlists.getLiked.invalidate();
     },
     onError: (error) => {
       if (error.data?.code === "UNAUTHORIZED") {
@@ -41,6 +41,7 @@ const WatchReactions = ({
   const dislikeMutation = trpc.videoReactions.dislike.useMutation({
     onSuccess: () => {
       utils.videos.getOne.invalidate({ id: videoId });
+      utils.playlists.getLiked.invalidate();
     },
     onError: (error) => {
       if (error.data?.code === "UNAUTHORIZED") {
