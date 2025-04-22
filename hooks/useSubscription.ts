@@ -24,6 +24,7 @@ export const useSubscription = ({
         toast.success("Subscribed successfully!");
       }
       //TODO: Reinvalidate subscription.getMany, user.getOne
+      utils.videos.getSubscribed.invalidate();
 
       if (fromVideoId) {
         utils.videos.getOne.invalidate({ id: fromVideoId });
@@ -37,8 +38,8 @@ export const useSubscription = ({
       }
     },
   });
-  const isPending = subscribe.isPending;
 
+  const isPending = subscribe.isPending;
   const onClick = () => {
     subscribe.mutate({ userId });
   };

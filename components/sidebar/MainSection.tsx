@@ -17,14 +17,14 @@ const items = [
     icon: Home,
   },
   {
-    title: "Subscriptions",
-    url: "/feed/subscriptions",
+    title: "Subscription",
+    url: "/subscription",
     icon: PlaySquare,
     auth: true,
   },
   {
     title: "Trending",
-    url: "/feed/trending",
+    url: "/trending",
     icon: Flame,
   },
 ];
