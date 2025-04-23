@@ -44,7 +44,6 @@ const UserPageInfo = ({ user }: UserPageInfoProps) => {
 
   const { isPending, onClick } = useSubscription({
     userId: user.id,
-    isSubscribed: user.isSubscribed,
   });
 
   return (
@@ -77,7 +76,9 @@ const UserPageInfo = ({ user }: UserPageInfoProps) => {
             className="w-full mt-3 rounded-full"
             asChild
           >
-            <Link href="/studio">Go to Studio</Link>
+            <Link prefetch href="/studio">
+              Go to Studio
+            </Link>
           </Button>
         ) : (
           <SubscriptionButton
@@ -112,7 +113,9 @@ const UserPageInfo = ({ user }: UserPageInfoProps) => {
           </div>
           {userId === user.clerkId ? (
             <Button variant="secondary" className="mt-3 rounded-full" asChild>
-              <Link href="/studio">Go to Studio</Link>
+              <Link prefetch href="/studio">
+                Go to Studio
+              </Link>
             </Button>
           ) : (
             <SubscriptionButton

@@ -312,7 +312,7 @@ const FormSection = ({ videoId }: FormSectionProps) => {
                   <div className="flex justify-between flex-col gap-y-2">
                     <p className="text-muted-foreground text-sm">Video URL</p>
                     <div className="flex items-center gap-x-2 border pl-2 border-black/50 rounded-sm">
-                      <Link href={`/watch/${video.id}`}>
+                      <Link prefetch href={`/watch/${video.id}`}>
                         <p className="line-clamp-1 text-sm text-blue-500">
                           {fullUrl}
                         </p>

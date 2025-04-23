@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { commentInsertSchema } from "@/db/schema";
 import {
   Form,
   FormControl,
@@ -51,8 +50,14 @@ const CommentForm = ({
     },
   });
 
-  const form = useForm<z.infer<typeof commentInsertSchema>>({
-    resolver: zodResolver(commentInsertSchema.omit({ userId: true })),
+  const formSchema = z.object({
+    value: z.string().min(1, "Comment Cannot Be Empty"),
+    videoId: z.string().uuid(),
+    parentId: z.string().uuid().optional(),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       parentId,
       videoId,
@@ -60,7 +65,7 @@ const CommentForm = ({
     },
   });
 
-  const handleSubmit = async (data: z.infer<typeof commentInsertSchema>) => {
+  const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     create.mutate(data);
   };
 
@@ -88,6 +93,7 @@ const CommentForm = ({
               <FormItem>
                 <FormControl>
                   <Textarea
+                    minLength={1}
                     {...field}
                     placeholder={
                       variant === "comment"

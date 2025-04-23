@@ -13,18 +13,18 @@ import { playlistRouter } from "@/module/playlist/procedure";
 import { usersRouter } from "@/module/user/procedure";
 
 export const appRouter = createTRPCRouter({
+  views: viewRouter,
+  users: usersRouter,
   studio: studioRouter,
   search: searchRouter,
   videos: videosRouter,
-  categories: categoriesRouter,
-  views: viewRouter,
-  videoReactions: videoReactionRouter,
-  subscriptions: subscriptionRouter,
   comments: commentsRouter,
-  commentReactions: commentReactionRouter,
-  suggestions: suggestionsRouter,
   playlists: playlistRouter,
-  users: usersRouter,
+  categories: categoriesRouter,
+  suggestions: suggestionsRouter,
+  subscriptions: subscriptionRouter,
+  videoReactions: videoReactionRouter,
+  commentReactions: commentReactionRouter,
 });
 
 export type AppRouter = typeof appRouter;

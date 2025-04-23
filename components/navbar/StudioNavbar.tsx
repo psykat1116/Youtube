@@ -12,7 +12,11 @@ const StudioNavbar = () => {
         {/* Logo or Brand Name */}
         <div className="flex items-center flex-shrink-0">
           <SidebarTrigger />
-          <Link href="/studio" className="p-4 flex items-center gap-1">
+          <Link
+            prefetch
+            href="/studio"
+            className="p-4 md:flex hidden items-center gap-1"
+          >
             <Image src="/Logo.png" alt="Logo" width={32} height={32} />
             <p className="text-xl font-semibold tracking-tight">Studio</p>
           </Link>

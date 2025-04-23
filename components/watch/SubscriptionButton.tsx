@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { BellRing, UserPlus } from "lucide-react";
 
 interface SubscriptionButtonProps {
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   disabled: boolean;
   isSubscribed: boolean;
   className?: string;

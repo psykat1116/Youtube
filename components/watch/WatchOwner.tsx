@@ -18,12 +18,11 @@ const WatchOwner = ({ user, videoId }: WatchOwnerProps) => {
   const { onClick, isPending } = useSubscription({
     userId: user.id,
     fromVideoId: videoId,
-    isSubscribed: user.isSubscribed,
   });
 
   return (
     <div className="flex items-center sm:items-start justify-between sm:justify-start gap-3 minw-0">
-      <Link href={`/users/${user.id}`}>
+      <Link prefetch href={`/users/${user.id}`}>
         <div className="flex items-center gap-3 min-w-0">
           <UserAvatar size="lg" imageUrl={user.imageUrl} name={user.name} />
           <div className="flex flex-col gap-1 min-w-0">
@@ -36,7 +35,9 @@ const WatchOwner = ({ user, videoId }: WatchOwnerProps) => {
       </Link>
       {userId === user.clerkId ? (
         <Button asChild variant="secondary" className="rounded-full">
-          <Link href={`/studio/video/${videoId}`}>Edit</Link>
+          <Link prefetch href={`/studio/video/${videoId}`}>
+            Edit
+          </Link>
         </Button>
       ) : (
         <SubscriptionButton

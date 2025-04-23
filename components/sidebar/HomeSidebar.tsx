@@ -1,8 +1,9 @@
-import React from "react";
 import { Sidebar, SidebarContent } from "../ui/sidebar";
 import MainSection from "./MainSection";
 import { Separator } from "../ui/separator";
 import PersonalSection from "./PersonalSection";
+import SubscriptionSection from "./SubscriptionSection";
+import { SignedIn } from "@clerk/nextjs";
 
 const HomeSidebar = () => {
   return (
@@ -11,6 +12,12 @@ const HomeSidebar = () => {
         <MainSection />
         <Separator className="px-4" />
         <PersonalSection />
+        <SignedIn>
+          <>
+            <Separator className="px-4" />
+            <SubscriptionSection />
+          </>
+        </SignedIn>
       </SidebarContent>
     </Sidebar>
   );
