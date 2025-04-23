@@ -67,6 +67,47 @@ export const ourFileRouter = {
 
       return { uploadedBy: metadata.userId };
     }),
+  bannerUploader: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .middleware(async () => {
+      const { userId: clerkId } = await auth();
+      if (!clerkId) throw new UploadThingError("Unauthorized");
+
+      const [currentUser] = await db
+        .select()
+        .from(users)
+        .where(eq(users.clerkId, clerkId))
+        .limit(1);
+
+      if (!currentUser) throw new UploadThingError("User not found");
+
+      if (currentUser.bannerKey) {
+        const utapi = new UTApi();
+        await utapi.deleteFiles([currentUser.bannerKey]);
+
+        await db
+          .update(users)
+          .set({ bannerKey: null, bannerUrl: null })
+          .where(eq(users.id, currentUser.id));
+      }
+
+      return { userId: currentUser.id };
+    })
+    .onUploadComplete(async ({ file, metadata }) => {
+      await db
+        .update(users)
+        .set({
+          bannerUrl: file.ufsUrl,
+          bannerKey: file.key,
+        })
+        .where(eq(users.id, metadata.userId));
+
+      return { uploadedBy: metadata.userId };
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

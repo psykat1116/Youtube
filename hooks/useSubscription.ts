@@ -25,6 +25,7 @@ export const useSubscription = ({
       }
       //TODO: Reinvalidate subscription.getMany, user.getOne
       utils.videos.getSubscribed.invalidate();
+      utils.users.getOne.invalidate({ id: userId });
 
       if (fromVideoId) {
         utils.videos.getOne.invalidate({ id: fromVideoId });
