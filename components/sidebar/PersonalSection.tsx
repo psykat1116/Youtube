@@ -1,37 +1,18 @@
 "use client";
-import { History, ListVideo, ThumbsUp } from "lucide-react";
-import {
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "../ui/sidebar";
-import Link from "next/link";
-import { useAuth, useClerk } from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
 
-const items = [
-  {
-    title: "History",
-    url: "/history",
-    icon: History,
-    auth: true,
-  },
-  {
-    title: "Liked Videos",
-    url: "/liked",
-    icon: ThumbsUp,
-    auth: true,
-  },
-  {
-    title: "All Playlists",
-    url: "/playlists",
-    icon: ListVideo,
-    auth: true,
-  },
-];
+import {
+  SidebarMenu,
+  SidebarGroup,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+} from "@/components/ui/sidebar";
+import { PersonalItems } from "@/constant";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAuth, useClerk } from "@clerk/nextjs";
 
 const PersonalSection = () => {
   const clerk = useClerk();
@@ -43,7 +24,7 @@ const PersonalSection = () => {
       <SidebarGroupLabel>You</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map((item) => (
+          {PersonalItems.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 tooltip={item.title}

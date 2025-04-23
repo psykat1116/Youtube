@@ -1,8 +1,9 @@
 import { db } from "@/db";
 import { videoReactions } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
-import { and, eq } from "drizzle-orm";
+
 import { z } from "zod";
+import { and, eq } from "drizzle-orm";
 
 export const videoReactionRouter = createTRPCRouter({
   like: protectedProcedure

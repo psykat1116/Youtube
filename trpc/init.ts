@@ -1,10 +1,11 @@
 import { cache } from "react";
-import { initTRPC, TRPCError } from "@trpc/server";
+import { eq } from "drizzle-orm";
 import superjson from "superjson";
 import { auth } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
-import { db, ratelimit } from "@/db";
+import { initTRPC, TRPCError } from "@trpc/server";
+
 import { users } from "@/db/schema";
+import { db, ratelimit } from "@/db";
 
 export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
 

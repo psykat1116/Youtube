@@ -1,10 +1,12 @@
-import { PlaylistGetManyOutput } from "@/types";
 import Link from "next/link";
-import React from "react";
+
+import PlayListInfo, {
+  PlaylistInfoSkeleton,
+} from "@/components/playlist/PlayListInfo";
+import { PlaylistGetManyOutput } from "@/types";
 import PlaylistThumbnail, {
   PlaylistThumbnailSkeleton,
-} from "./PlaylistThumbnail";
-import PlayListInfo, { PlaylistInfoSkeleton } from "./PlayListInfo";
+} from "@/components/playlist/PlaylistThumbnail";
 
 interface PlaylistGridCardProps {
   data: PlaylistGetManyOutput["items"][number];

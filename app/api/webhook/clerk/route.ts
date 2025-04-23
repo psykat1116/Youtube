@@ -1,7 +1,8 @@
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { verifyWebhook } from "@clerk/nextjs/webhooks";
+
 import { eq } from "drizzle-orm";
+import { verifyWebhook } from "@clerk/nextjs/webhooks";
 
 export async function POST(req: Request) {
   try {

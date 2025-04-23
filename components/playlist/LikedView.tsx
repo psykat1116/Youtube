@@ -1,4 +1,4 @@
-import LikedVideoSection from "./LikedVideoSection";
+import LikedVideoSection from "@/components/playlist/LikedVideoSection";
 
 const LikedView = () => {
   return (

@@ -1,6 +1,5 @@
-import React from "react";
-import CategoriesSection from "./CategoriesSection";
-import ResultSection from "./ResultSection";
+import ResultSection from "@/components/search/ResultSection";
+import CategoriesSection from "@/components/search/CategoriesSection";
 
 interface SearchViewProps {
   query: string | undefined;

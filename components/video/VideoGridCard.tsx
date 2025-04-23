@@ -1,10 +1,10 @@
-import { VideoGetManyOutput } from "@/types";
 import Link from "next/link";
-import React from "react";
+
 import VideoThumbnail, {
   VideoThumbnailSkeleton,
-} from "../studio/VideoThumbnail";
-import VideoInfo, { VideoInfoSkeleton } from "./VideoInfo";
+} from "@/components/studio/VideoThumbnail";
+import { VideoGetManyOutput } from "@/types";
+import VideoInfo, { VideoInfoSkeleton } from "@/components/video/VideoInfo";
 
 interface VideoGridCardProps {
   data: VideoGetManyOutput["items"][number];

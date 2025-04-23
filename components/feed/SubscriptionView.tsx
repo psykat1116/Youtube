@@ -1,4 +1,4 @@
-import SubscriptionVideoSection from "./SubscriptionVideoSection";
+import SubscriptionVideoSection from "@/components/feed/SubscriptionVideoSection";
 
 const SubscriptionView = () => {
   return (

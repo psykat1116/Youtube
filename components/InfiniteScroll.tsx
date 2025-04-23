@@ -1,7 +1,8 @@
-import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 import { useEffect } from "react";
-import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { useIntersectionObserver } from "@/hooks/useIntersectionObserver";
 
 interface InfiniteScrollProps {
   isManual?: boolean;

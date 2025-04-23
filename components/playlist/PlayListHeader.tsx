@@ -1,13 +1,14 @@
 "use client";
 
+import { toast } from "sonner";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { Button } from "../ui/button";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { ErrorBoundary } from "react-error-boundary";
+
 import { trpc } from "@/trpc/client";
-import { toast } from "sonner";
-import { Skeleton } from "../ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface PlayListHeaderProps {
   playlistId: string;

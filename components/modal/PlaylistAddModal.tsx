@@ -1,10 +1,11 @@
 import { trpc } from "@/trpc/client";
-import ResponsiveModal from "./ResponsiveModal";
 import { DEFAULT_LIMIT } from "@/constant";
-import { Loader, Square, SquareCheck } from "lucide-react";
-import { Button } from "../ui/button";
-import InfiniteScroll from "../InfiniteScroll";
+import { Button } from "@/components/ui/button";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import ResponsiveModal from "@/components/modal/ResponsiveModal";
+
 import { toast } from "sonner";
+import { Loader, Square, SquareCheck } from "lucide-react";
 
 interface PlaylistAddModalProps {
   open: boolean;

@@ -1,25 +1,25 @@
-import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-} from "../ui/drawer";
+} from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface ResponsiveModalProps {
-  children: React.ReactNode;
   open: boolean;
-  onOpenChange: (open: boolean) => void;
   title: string;
   description: string;
+  children: React.ReactNode;
+  onOpenChange: (open: boolean) => void;
 }
 
 const ResponsiveModal = ({

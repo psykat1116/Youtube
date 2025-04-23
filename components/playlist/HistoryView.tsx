@@ -1,4 +1,4 @@
-import HistoryVideoSection from "./HistoryVideoSection";
+import HistoryVideoSection from "@/components/playlist/HistoryVideoSection";
 
 const HistoryView = () => {
   return (

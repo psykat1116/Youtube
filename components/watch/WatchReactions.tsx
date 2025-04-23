@@ -1,12 +1,12 @@
-import React from "react";
-import { Button } from "../ui/button";
-import { ThumbsDown, ThumbsUp } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Separator } from "../ui/separator";
-import { VideoGetOneOutput } from "@/types";
-import { useClerk } from "@clerk/nextjs";
-import { trpc } from "@/trpc/client";
 import { toast } from "sonner";
+import { useClerk } from "@clerk/nextjs";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { trpc } from "@/trpc/client";
+import { VideoGetOneOutput } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 interface WatchReactionsProps {
   videoId: string;

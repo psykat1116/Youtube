@@ -1,12 +1,12 @@
-import { VideoGetOneOutput } from "@/types";
 import Link from "next/link";
-import React from "react";
-import UserAvatar from "../UserAvatar";
+
 import { useAuth } from "@clerk/nextjs";
-import { Button } from "../ui/button";
-import SubscriptionButton from "./SubscriptionButton";
-import UserInfo from "../user/UserInfo";
+import { VideoGetOneOutput } from "@/types";
+import { Button } from "@/components/ui/button";
+import UserAvatar from "@/components/UserAvatar";
+import UserInfo from "@/components/user/UserInfo";
 import { useSubscription } from "@/hooks/useSubscription";
+import SubscriptionButton from "@/components/watch/SubscriptionButton";
 
 interface WatchOwnerProps {
   user: VideoGetOneOutput["user"];

@@ -1,51 +1,52 @@
 "use client";
 
-import { trpc } from "@/trpc/client";
-import { Suspense, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { Button } from "../ui/button";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import {
-  CircleCheck,
-  CircleX,
   Copy,
-  CopyCheck,
-  Globe,
-  ImagePlus,
-  Loader,
   Lock,
-  RefreshCcw,
-  RotateCcw,
   Trash,
+  Globe,
+  Loader,
+  CircleX,
+  CopyCheck,
+  ImagePlus,
+  RotateCcw,
+  RefreshCcw,
+  CircleCheck,
 } from "lucide-react";
+import { z } from "zod";
+import Link from "next/link";
+import { toast } from "sonner";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
+import { Suspense, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ErrorBoundary } from "react-error-boundary";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Form,
-  FormControl,
-  FormField,
   FormItem,
-  FormMessage,
   FormLabel,
-} from "../ui/form";
+  FormField,
+  FormMessage,
+  FormControl,
+} from "@/components/ui/form";
 import {
   Select,
   SelectItem,
-  SelectTrigger,
   SelectValue,
   SelectContent,
+  SelectTrigger,
 } from "@/components/ui/select";
-import { videoUpdateSchema } from "@/db/schema";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { toast } from "sonner";
-import VideoPlayer from "./VideoPlayer";
-import Link from "next/link";
+import { trpc } from "@/trpc/client";
+import { Input } from "@/components/ui/input";
 import { snakeCaseToTitle } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import ThumbnailUploadModal from "../modal/ThumbnailUploadModal";
-import { Skeleton } from "../ui/skeleton";
+import { Button } from "@/components/ui/button";
+import { videoUpdateSchema } from "@/db/schema";
+import { Textarea } from "@/components/ui/textarea";
+import { Skeleton } from "@/components/ui/skeleton";
+import VideoPlayer from "@/components/video/VideoPlayer";
+import ThumbnailUploadModal from "@/components/modal/ThumbnailUploadModal";
 
 interface FormSectionProps {
   videoId: string;
@@ -110,9 +111,9 @@ const FormSectionSkeleton = () => {
 const FormSection = ({ videoId }: FormSectionProps) => {
   const router = useRouter();
   const utils = trpc.useUtils();
-  const fullUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}/watch/${videoId}`
-    : `http://localhost:3000/watch/${videoId}`;
+  const fullUrl = `${
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+  }/watch/${videoId}`;
   const [isCopied, setIsCopied] = useState(false);
   const [thumbnailOpen, setThumbnailOpen] = useState(false);
 

@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import { BellRing, UserPlus } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 
 interface SubscriptionButtonProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;

@@ -1,11 +1,12 @@
-import { cn } from "@/lib/utils";
-import { UserGetOneOutput } from "@/types";
+import { Edit2 } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
 import React, { useState } from "react";
-import { Button } from "../ui/button";
-import { Edit2 } from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
-import BannerUploadModal from "../modal/BannerUploadModal";
+
+import { cn } from "@/lib/utils";
+import { UserGetOneOutput } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import BannerUploadModal from "@/components/modal/BannerUploadModal";
 
 interface UserPageBannerProps {
   user: UserGetOneOutput;

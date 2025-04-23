@@ -1,8 +1,9 @@
-import { cn } from "@/lib/utils";
-import { ListVideo, Play } from "lucide-react";
 import Image from "next/image";
-import React, { useMemo } from "react";
-import { Skeleton } from "../ui/skeleton";
+import { useMemo } from "react";
+import { ListVideo, Play } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface PlaylistThumbnailProps {
   imageUrl?: string;

@@ -1,13 +1,14 @@
 "use client";
 
+import Link from "next/link";
+import { toast } from "sonner";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+
 import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
-import InfiniteScroll from "../InfiniteScroll";
-import { toast } from "sonner";
-import Link from "next/link";
-import SubscriptionItem, { SubscriptionItemSkeleton } from "./SubscriptionItem";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import SubscriptionItem, { SubscriptionItemSkeleton } from "@/components/subscription/SubscriptionItem";
 
 const SubscriptionsSectionSkeleton = () => {
   return (

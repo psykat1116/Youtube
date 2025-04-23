@@ -1,9 +1,10 @@
 import { db } from "@/db";
-import { comments, videoReactions, videos, views } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { comments, videoReactions, videos, views } from "@/db/schema";
+
+import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { eq, and, or, lt, desc, getTableColumns } from "drizzle-orm";
-import { z } from "zod";
 
 export const studioRouter = createTRPCRouter({
   getMany: protectedProcedure

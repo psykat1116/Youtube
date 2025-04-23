@@ -1,5 +1,5 @@
-import PlayListHeader from "./PlayListHeader";
-import PlayListVideoSection from "./PlayListVideoSection";
+import PlayListHeader from "@/components/playlist/PlayListHeader";
+import PlayListVideoSection from "@/components/playlist/PlayListVideoSection";
 
 interface PlayListVideoViewProps {
   playlistId: string;

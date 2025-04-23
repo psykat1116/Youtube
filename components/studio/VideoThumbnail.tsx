@@ -1,7 +1,7 @@
-import { formatDuartion } from "@/lib/utils";
 import Image from "next/image";
-import React from "react";
-import { Skeleton } from "../ui/skeleton";
+
+import { formatDuartion } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface VideoThumbnailProps {
   imageUrl?: string | null;

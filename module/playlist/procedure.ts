@@ -1,4 +1,3 @@
-import { db } from "@/db";
 import {
   videoReactions,
   users,
@@ -7,10 +6,12 @@ import {
   playlists,
   playlistVideos,
 } from "@/db/schema";
+import { db } from "@/db";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+
+import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { and, desc, eq, getTableColumns, lt, or, sql } from "drizzle-orm";
-import { z } from "zod";
 
 export const playlistRouter = createTRPCRouter({
   getHistory: protectedProcedure

@@ -1,12 +1,13 @@
 "use client";
 
-import { trpc } from "@/trpc/client";
-import { Button } from "../ui/button";
-import { Loader, Plus } from "lucide-react";
 import { toast } from "sonner";
-import ResponsiveModal from "./ResponsiveModal";
-import StudioUploader from "../studio/StudioUploader";
+import { Loader, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+
+import { trpc } from "@/trpc/client";
+import { Button } from "@/components/ui/button";
+import StudioUploader from "@/components/studio/StudioUploader";
+import ResponsiveModal from "@/components/modal/ResponsiveModal";
 
 const StudioUploadModal = () => {
   const router = useRouter();

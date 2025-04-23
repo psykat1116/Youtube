@@ -1,15 +1,16 @@
+import { cn } from "@/lib/utils";
 import {
   Carousel,
   CarouselApi,
-  CarouselContent,
   CarouselItem,
   CarouselNext,
+  CarouselContent,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Badge } from "../ui/badge";
-import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+
 import { useEffect, useState } from "react";
-import { Skeleton } from "../ui/skeleton";
 
 interface FilterCarouselProps {
   value?: string | null;

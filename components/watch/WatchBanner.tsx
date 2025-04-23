@@ -1,6 +1,6 @@
-import { VideoGetOneOutput } from "@/types";
 import { AlertTriangle } from "lucide-react";
-import React from "react";
+
+import { VideoGetOneOutput } from "@/types";
 
 interface WatchBannerProps {
   status: VideoGetOneOutput["muxStatus"];

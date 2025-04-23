@@ -1,6 +1,6 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+
 import AuthButton from "@/components/auth/AuthButton";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import SearchInput from "@/components/navbar/SearchInput";

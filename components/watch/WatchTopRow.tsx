@@ -1,11 +1,12 @@
-import { VideoGetOneOutput } from "@/types";
-import React, { useMemo } from "react";
-import WatchOwner from "./WatchOwner";
-import WatchReactions from "./WatchReactions";
-import WatchMenu from "./WatchMenu";
-import WatchDescription from "./WatchDescription";
+import { useMemo } from "react";
 import { format, formatDistanceToNow } from "date-fns";
-import { Skeleton } from "../ui/skeleton";
+
+import { VideoGetOneOutput } from "@/types";
+import { Skeleton } from "@/components/ui/skeleton";
+import WatchMenu from "@/components/watch/WatchMenu";
+import WatchOwner from "@/components/watch/WatchOwner";
+import WatchReactions from "@/components/watch/WatchReactions";
+import WatchDescription from "@/components/watch/WatchDescription";
 
 interface WatchTopRowProps {
   video: VideoGetOneOutput;

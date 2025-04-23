@@ -5,7 +5,6 @@ import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 
 const AuthButton = () => {
-  // TODO: ADD Different auth state
   return (
     <>
       <SignedOut>

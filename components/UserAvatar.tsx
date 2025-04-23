@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
-import { Avatar, AvatarImage } from "./ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+
 import { cva, type VariantProps } from "class-variance-authority";
 
 const avatarVariants = cva("", {

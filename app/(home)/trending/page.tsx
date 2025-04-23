@@ -1,6 +1,6 @@
-import TrendingView from "@/components/feed/TrendingView";
 import { DEFAULT_LIMIT } from "@/constant";
 import { HydrateClient, trpc } from "@/trpc/server";
+import TrendingView from "@/components/feed/TrendingView";
 
 export const dynamic = "force-dynamic";
 

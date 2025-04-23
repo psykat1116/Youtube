@@ -1,4 +1,4 @@
-import FormSection from "./FormSection";
+import FormSection from "@/components/video/FormSection";
 
 interface VideoViewProps {
   videoId: string;

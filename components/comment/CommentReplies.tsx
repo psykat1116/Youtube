@@ -1,9 +1,9 @@
 import { trpc } from "@/trpc/client";
-import { CornerDownRight, Loader } from "lucide-react";
-import React from "react";
-import CommentItem from "./CommentItem";
-import { Button } from "../ui/button";
 import { DEFAULT_LIMIT } from "@/constant";
+import { Button } from "@/components/ui/button";
+import CommentItem from "@/components/comment/CommentItem";
+
+import { CornerDownRight, Loader } from "lucide-react";
 
 interface CommentRepliesProps {
   parentId: string;

@@ -9,7 +9,6 @@ import { QueryClientProvider } from "@tanstack/react-query";
 
 import type { AppRouter } from "./routers/_app";
 import { makeQueryClient } from "./query-client";
-import { WEBSITE_URL } from "@/constant";
 
 let clientQueryClientSingleton: QueryClient;
 export const trpc = createTRPCReact<AppRouter>();
@@ -26,10 +25,8 @@ function getUrl() {
   const base = (() => {
     if (typeof window !== "undefined") return "";
 
-    // !/ Vercel provides the URL in the environment variable
-    // ? If use another hosting provider, you can set the URL in the environment variable
-
-    if (process.env.VERCEL_URL) return WEBSITE_URL;
+    if (process.env.NEXT_PUBLIC_SITE_URL)
+      return process.env.NEXT_PUBLIC_SITE_URL;
     return "http://localhost:3000";
   })();
 

@@ -1,7 +1,7 @@
+import Mux from "@mux/mux-node";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 import { drizzle } from "drizzle-orm/neon-http";
-import Mux from "@mux/mux-node";
 
 export const db = drizzle(process.env.DATABASE_URL!);
 

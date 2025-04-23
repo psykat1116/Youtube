@@ -1,5 +1,5 @@
-import HomeView from "@/components/feed/HomeView";
 import { DEFAULT_LIMIT } from "@/constant";
+import HomeView from "@/components/feed/HomeView";
 import { HydrateClient, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";

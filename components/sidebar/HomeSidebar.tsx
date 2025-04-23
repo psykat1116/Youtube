@@ -1,9 +1,10 @@
-import { Sidebar, SidebarContent } from "../ui/sidebar";
-import MainSection from "./MainSection";
-import { Separator } from "../ui/separator";
-import PersonalSection from "./PersonalSection";
-import SubscriptionSection from "./SubscriptionSection";
 import { SignedIn } from "@clerk/nextjs";
+
+import { Separator } from "@/components/ui/separator";
+import MainSection from "@/components/sidebar/MainSection";
+import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
+import PersonalSection from "@/components/sidebar/PersonalSection";
+import SubscriptionSection from "@/components/sidebar/SubscriptionSection";
 
 const HomeSidebar = () => {
   return (

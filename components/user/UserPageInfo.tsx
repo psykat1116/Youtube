@@ -1,13 +1,13 @@
-import { UserGetOneOutput } from "@/types";
-import React from "react";
-import UserAvatar from "../UserAvatar";
-import { useAuth, useClerk } from "@clerk/nextjs";
-import { Button } from "../ui/button";
 import Link from "next/link";
-import SubscriptionButton from "../watch/SubscriptionButton";
-import { useSubscription } from "@/hooks/useSubscription";
+import { useAuth, useClerk } from "@clerk/nextjs";
+
 import { cn } from "@/lib/utils";
-import { Skeleton } from "../ui/skeleton";
+import { UserGetOneOutput } from "@/types";
+import { Button } from "@/components/ui/button";
+import UserAvatar from "@/components/UserAvatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useSubscription } from "@/hooks/useSubscription";
+import SubscriptionButton from "@/components/watch/SubscriptionButton";
 
 interface UserPageInfoProps {
   user: UserGetOneOutput;

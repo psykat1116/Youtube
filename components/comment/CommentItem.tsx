@@ -1,30 +1,31 @@
-import { CommentGetManyOutput } from "@/types";
+import {
+  Trash2,
+  ThumbsUp,
+  ChevronUp,
+  ThumbsDown,
+  ChevronDown,
+  MoreVertical,
+  MessageSquare,
+} from "lucide-react";
 import Link from "next/link";
-import UserAvatar from "../UserAvatar";
-import { formatDistanceToNow } from "date-fns";
-import { trpc } from "@/trpc/client";
 import { toast } from "sonner";
+import { useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { useAuth, useClerk } from "@clerk/nextjs";
+
+import { cn } from "@/lib/utils";
+import { trpc } from "@/trpc/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
-import {
-  ChevronDown,
-  ChevronUp,
-  MessageSquare,
-  MoreVertical,
-  ThumbsDown,
-  ThumbsUp,
-  Trash2,
-} from "lucide-react";
-import { useAuth, useClerk } from "@clerk/nextjs";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
-import CommentForm from "./CommentForm";
-import CommentReplies from "./CommentReplies";
+} from "@/components/ui/dropdown-menu";
+import { CommentGetManyOutput } from "@/types";
+import { Button } from "@/components/ui/button";
+import UserAvatar from "@/components/UserAvatar";
+import CommentForm from "@/components/comment/CommentForm";
+import CommentReplies from "@/components/comment/CommentReplies";
 
 interface CommentItemProps {
   comment: CommentGetManyOutput["items"][number];

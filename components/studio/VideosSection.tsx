@@ -1,24 +1,25 @@
 "use client";
 
-import { DEFAULT_LIMIT } from "@/constant";
-import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
+import { format } from "date-fns";
+import { useRouter } from "next/navigation";
 import { ErrorBoundary } from "react-error-boundary";
-import InfiniteScroll from "../InfiniteScroll";
+import { CircleCheck, CircleX, Globe, Loader, Lock } from "lucide-react";
+
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableHeader,
   TableRow,
-} from "../ui/table";
-import { useRouter } from "next/navigation";
-import VideoThumbnail from "./VideoThumbnail";
+  TableHeader,
+} from "@/components/ui/table";
+import { trpc } from "@/trpc/client";
+import { DEFAULT_LIMIT } from "@/constant";
 import { snakeCaseToTitle } from "@/lib/utils";
-import { format } from "date-fns";
-import { CircleCheck, CircleX, Globe, Loader, Lock } from "lucide-react";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import VideoThumbnail from "@/components/studio/VideoThumbnail";
 
 const VideoScetionSkeleton = () => {
   return (
@@ -104,6 +105,15 @@ const VideosSection = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
+                {data.pages.flatMap((page) => page.items).length === 0 && (
+                  <TableRow className="">
+                    <TableCell colSpan={7} className="text-center py-10">
+                      <p className="text-sm capitalize">
+                        You have no videos yet
+                      </p>
+                    </TableCell>
+                  </TableRow>
+                )}
                 {data.pages
                   .flatMap((page) => page.items)
                   .map((video) => (

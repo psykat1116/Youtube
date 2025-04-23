@@ -1,4 +1,5 @@
 import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
 import {
   VideoAssetCreatedWebhookEvent,
   VideoAssetErroredWebhookEvent,
@@ -6,9 +7,9 @@ import {
   VideoAssetTrackReadyWebhookEvent,
   VideoAssetDeletedWebhookEvent,
 } from "@mux/mux-node/resources/webhooks";
+
 import { db, mux } from "@/db";
 import { videos } from "@/db/schema";
-import { headers } from "next/headers";
 
 type WebhookEvent =
   | VideoAssetCreatedWebhookEvent

@@ -1,9 +1,11 @@
 "use client";
-import { trpc } from "@/trpc/client";
-import React, { Suspense } from "react";
+
+import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import UserPageBanner, { UserPageBannerSkeleton } from "./UserPageBanner";
-import UserPageInfo, { UserPageInfoSkeleton } from "./UserPageInfo";
+
+import { trpc } from "@/trpc/client";
+import UserPageInfo, { UserPageInfoSkeleton } from "@/components/user/UserPageInfo";
+import UserPageBanner, { UserPageBannerSkeleton } from "@/components/user/UserPageBanner";
 
 interface UserSectionProps {
   userId: string;

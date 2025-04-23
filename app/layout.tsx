@@ -1,9 +1,10 @@
 import "./globals.css";
+import { Toaster } from "sonner";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+
 import { TRPCProvider } from "@/trpc/client";
-import { Toaster } from "sonner";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     title: "Youtube",
     description:
       "Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
-    url: "",
+    url: "https://youtube-ten-amber.vercel.app/",
     siteName: "Youtube",
     locale: "en_US",
     type: "website",

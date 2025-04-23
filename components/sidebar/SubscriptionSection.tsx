@@ -1,20 +1,21 @@
 "use client";
 
 import {
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
-  SidebarMenuButton,
+  SidebarGroup,
   SidebarMenuItem,
-} from "../ui/sidebar";
-import Link from "next/link";
+  SidebarMenuButton,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+} from "@/components/ui/sidebar";
 import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
-import { usePathname } from "next/navigation";
-import UserAvatar from "../UserAvatar";
-import { Skeleton } from "../ui/skeleton";
+import UserAvatar from "@/components/UserAvatar";
+import { Skeleton } from "@/components/ui/skeleton";
+
+import Link from "next/link";
 import { List } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const SubscriptionSectionSkeleton = () => {
   return (

@@ -1,9 +1,10 @@
 import { db } from "@/db";
 import { subscriptions, users, videos } from "@/db/schema";
 import { baseProcedure, createTRPCRouter } from "@/trpc/init";
+
+import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { eq, getTableColumns, inArray, isNotNull } from "drizzle-orm";
-import { z } from "zod";
 
 export const usersRouter = createTRPCRouter({
   getOne: baseProcedure

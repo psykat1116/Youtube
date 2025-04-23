@@ -1,6 +1,6 @@
-import WatchSection from "./WatchSection";
-import CommentSection from "./CommentSection";
-import SuggestionSection from "./SuggestionSection";
+import WatchSection from "@/components/watch/WatchSection";
+import CommentSection from "@/components/watch/CommentSection";
+import SuggestionSection from "@/components/watch/SuggestionSection";
 
 interface WatchViewProps {
   videoId: string;

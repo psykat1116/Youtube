@@ -1,13 +1,14 @@
 "use client";
 
+import { Suspense } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { ErrorBoundary } from "react-error-boundary";
+
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
-import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import VideoPlayer, { VideoPlayerSkeleton } from "../video/VideoPlayer";
-import WatchBanner from "./WatchBanner";
-import WatchTopRow, { WatchTopRowSkeleton } from "./WatchTopRow";
-import { useAuth } from "@clerk/nextjs";
+import WatchBanner from "@/components/watch/WatchBanner";
+import VideoPlayer, { VideoPlayerSkeleton } from "@/components/video/VideoPlayer";
+import WatchTopRow, { WatchTopRowSkeleton } from "@/components/watch/WatchTopRow";
 
 interface WatchSectionProps {
   videoId: string;

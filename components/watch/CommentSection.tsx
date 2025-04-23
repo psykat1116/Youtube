@@ -1,13 +1,14 @@
 "use client";
 
-import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import CommentForm from "../comment/CommentForm";
-import CommentItem from "../comment/CommentItem";
-import InfiniteScroll from "../InfiniteScroll";
 import { Loader } from "lucide-react";
+import { ErrorBoundary } from "react-error-boundary";
+
+import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import CommentItem from "@/components/comment/CommentItem";
+import CommentForm from "@/components/comment/CommentForm";
 
 interface CommentSectionProps {
   videoId: string;

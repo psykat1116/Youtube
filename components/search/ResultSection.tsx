@@ -1,12 +1,18 @@
 "use client";
 
-import { trpc } from "@/trpc/client";
 import { Suspense } from "react";
-import VideoRowCard, { VideoRowCardSkeleton } from "../video/VideoRowCard";
-import VideoGridCard, { VideoGridCardSkeleton } from "../video/VideoGridCard";
-import InfiniteScroll from "../InfiniteScroll";
 import { ErrorBoundary } from "react-error-boundary";
+
+import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import VideoRowCard, {
+  VideoRowCardSkeleton,
+} from "@/components/video/VideoRowCard";
+import VideoGridCard, {
+  VideoGridCardSkeleton,
+} from "@/components/video/VideoGridCard";
+import Image from "next/image";
 
 interface ResultSectionProps {
   query: string | undefined;
@@ -48,6 +54,12 @@ const ResultSection = ({ query, categoryId }: ResultSectionProps) => {
       fallback={<ResultSectionSkeleton />}
     >
       <ErrorBoundary fallback={<p>Error</p>}>
+        {results.pages.flatMap((page) => page.items).length === 0 && (
+          <div className="flex flex-col justify-center items-center h-[22rem]">
+            <Image src="/Empty.svg" alt="Logo" height={300} width={300} />
+            <p className="uppercase text-xl font-semibold mt-2">No Videos</p>
+          </div>
+        )}
         <div className="flex flex-col gap-4 gap-y-10 md:hidden">
           {results.pages
             .flatMap((page) => page.items)

@@ -1,5 +1,4 @@
-import React from "react";
-import SubscriptionsSection from "./SubscriptionsSection";
+import SubscriptionsSection from "@/components/subscription/SubscriptionsSection";
 
 const SubscriptionsView = () => {
   return (

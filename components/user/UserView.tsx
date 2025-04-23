@@ -1,7 +1,6 @@
-import React from "react";
-import UserSection from "./UserSection";
-import UserVideoSection from "./UserVideoSection";
-import { Separator } from "../ui/separator";
+import { Separator } from "@/components/ui/separator";
+import UserSection from "@/components/user/UserSection";
+import UserVideoSection from "@/components/user/UserVideoSection";
 
 interface UserIdPageProps {
   userId: string;

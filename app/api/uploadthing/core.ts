@@ -1,10 +1,11 @@
 import { db } from "@/db";
 import { users, videos } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
-import { and, eq } from "drizzle-orm";
-import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError, UTApi } from "uploadthing/server";
+
 import { z } from "zod";
+import { and, eq } from "drizzle-orm";
+import { auth } from "@clerk/nextjs/server";
+import { UploadThingError, UTApi } from "uploadthing/server";
+import { createUploadthing, type FileRouter } from "uploadthing/next";
 
 const f = createUploadthing();
 

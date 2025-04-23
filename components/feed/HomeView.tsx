@@ -1,5 +1,5 @@
-import CategoryBar from "./CategoryBar";
-import HomeVideoSection from "./HomeVideoSection";
+import CategoryBar from "@/components/feed/CategoryBar";
+import HomeVideoSection from "@/components/feed/HomeVideoSection";
 
 interface HomeViewProps {
   categoryId?: string;

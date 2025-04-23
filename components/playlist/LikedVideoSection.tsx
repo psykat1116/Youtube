@@ -2,11 +2,12 @@
 
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+
 import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
-import InfiniteScroll from "../InfiniteScroll";
-import VideoRowCard, { VideoRowCardSkeleton } from "../video/VideoRowCard";
-import VideoGridCard, { VideoGridCardSkeleton } from "../video/VideoGridCard";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import VideoRowCard, { VideoRowCardSkeleton } from "@/components/video/VideoRowCard";
+import VideoGridCard, { VideoGridCardSkeleton } from "@/components/video/VideoGridCard";
 
 const LikedVideoSectionSkeleton = () => {
   return (

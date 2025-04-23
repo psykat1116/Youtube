@@ -1,14 +1,14 @@
-import { useUser } from "@clerk/nextjs";
-import React from "react";
-import {
-  SidebarHeader,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "../ui/sidebar";
 import Link from "next/link";
-import UserAvatar from "../UserAvatar";
-import { Skeleton } from "../ui/skeleton";
+import { useUser } from "@clerk/nextjs";
+
+import {
+  useSidebar,
+  SidebarHeader,
+  SidebarMenuItem,
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
+import UserAvatar from "@/components/UserAvatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const StudioSidebarHeader = () => {
   const { user } = useUser();

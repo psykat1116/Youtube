@@ -1,10 +1,11 @@
 "use client";
 
-import { Plus } from "lucide-react";
-import { Button } from "../ui/button";
-import PlaylistCreateModal from "../modal/PlaylistCreateModal";
 import { useState } from "react";
-import PlaylistSection from "./PlaylistSection";
+import { Plus } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import PlaylistSection from "@/components/playlist/PlaylistSection";
+import PlaylistCreateModal from "@/components/modal/PlaylistCreateModal";
 
 const PlaylistView = () => {
   const [open, setOpen] = useState(false);
@@ -16,18 +17,13 @@ const PlaylistView = () => {
         <div>
           <h1 className="text-2xl font-bold">Playlists</h1>
           <p className="text-xs text-muted-foreground">
-            Explore a collection of curated playlists featuring a variety of
-            videos from different genres and themes. Discover new content and
-            enjoy binge-watching your favorite topics.
+            Create and manage your playlists. You can add songs, edit details,
+            and share them with others.
           </p>
         </div>
-        <Button
-          variant="outline"
-          size="icon"
-          className="rounded-full"
-          onClick={() => setOpen(true)}
-        >
+        <Button variant="outline" onClick={() => setOpen(true)}>
           <Plus />
+          Create
         </Button>
       </div>
       <PlaylistSection />

@@ -1,11 +1,12 @@
-import { VideoGetManyOutput } from "@/types";
-import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
-import React, { useMemo } from "react";
-import UserAvatar from "../UserAvatar";
-import UserInfo from "../user/UserInfo";
-import WatchMenu from "../watch/WatchMenu";
-import { Skeleton } from "../ui/skeleton";
+import { useMemo } from "react";
+import { formatDistanceToNow } from "date-fns";
+
+import { VideoGetManyOutput } from "@/types";
+import UserAvatar from "@/components/UserAvatar";
+import UserInfo from "@/components/user/UserInfo";
+import { Skeleton } from "@/components/ui/skeleton";
+import WatchMenu from "@/components/watch/WatchMenu";
 
 interface VideoInfoProps {
   data: VideoGetManyOutput["items"][number];
@@ -42,7 +43,7 @@ const VideoInfo = ({ data, onRemove }: VideoInfoProps) => {
       </Link>
       <div className="min-w-0 flex-1">
         <Link prefetch href={`/watch/${data.id}`}>
-          <h3 className="font-medium line-clamp-1 lg:line-clamp-2 text-base break-words">
+          <h3 className="font-medium line-clamp-1 text-base break-words">
             {data.title}
           </h3>
         </Link>
@@ -50,7 +51,7 @@ const VideoInfo = ({ data, onRemove }: VideoInfoProps) => {
           <UserInfo name={data.user.name} />
         </Link>
         <Link prefetch href={`/watch/${data.id}`}>
-          <p className="text-sm text-gray-600 line-clamp-1">
+          <p className="text-xs text-gray-600 line-clamp-1">
             {compactViews} views • {compactDate}
           </p>
         </Link>

@@ -1,19 +1,20 @@
-import UserAvatar from "../UserAvatar";
-import { useUser, useClerk } from "@clerk/nextjs";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
-import { useForm } from "react-hook-form";
 import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { useForm } from "react-hook-form";
+import { useUser, useClerk } from "@clerk/nextjs";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "../ui/form";
+} from "@/components/ui/form";
 import { trpc } from "@/trpc/client";
+import { Button } from "@/components/ui/button";
+import UserAvatar from "@/components/UserAvatar";
+import { Textarea } from "@/components/ui/textarea";
 
 interface CommentFormProps {
   videoId: string;

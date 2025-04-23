@@ -1,30 +1,31 @@
-import { db, mux } from "@/db";
 import {
-  videoReactions,
-  subscriptions,
   users,
-  videos,
-  videoUpdateSchema,
   views,
+  videos,
+  subscriptions,
+  videoReactions,
+  videoUpdateSchema,
 } from "@/db/schema";
 import {
   baseProcedure,
   createTRPCRouter,
   protectedProcedure,
 } from "@/trpc/init";
-import { TRPCError } from "@trpc/server";
+import { db, mux } from "@/db";
+
 import {
-  and,
-  desc,
   eq,
-  getTableColumns,
-  inArray,
-  isNotNull,
   lt,
   or,
+  and,
+  desc,
+  inArray,
+  isNotNull,
+  getTableColumns,
 } from "drizzle-orm";
-import { UTApi } from "uploadthing/server";
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
+import { UTApi } from "uploadthing/server";
 
 export const videosRouter = createTRPCRouter({
   create: protectedProcedure.mutation(async ({ ctx }) => {

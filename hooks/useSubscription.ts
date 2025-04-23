@@ -1,4 +1,5 @@
 import { trpc } from "@/trpc/client";
+
 import { toast } from "sonner";
 import { useClerk } from "@clerk/nextjs";
 
@@ -11,8 +12,8 @@ export const useSubscription = ({
   userId,
   fromVideoId,
 }: UseSubscriptionProps) => {
-  const { openSignIn } = useClerk();
   const utils = trpc.useUtils();
+  const { openSignIn } = useClerk();
 
   const subscribe = trpc.subscriptions.create.useMutation({
     onSuccess: () => {

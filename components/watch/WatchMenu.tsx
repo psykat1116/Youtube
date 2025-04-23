@@ -1,14 +1,23 @@
-import React, { useState } from "react";
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
-import { ListPlus, MoreVertical, Share, Trash2 } from "lucide-react";
+  DropdownMenuContent,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import PlaylistAddModal from "@/components/modal/PlaylistAddModal";
+
 import { toast } from "sonner";
-import PlaylistAddModal from "../modal/PlaylistAddModal";
+import { useState } from "react";
+import {
+  Clock5,
+  Forward,
+  ListPlus,
+  MoreVertical,
+  Ban,
+  Trash2,
+} from "lucide-react";
+import { useClerk, useUser } from "@clerk/nextjs";
 
 interface WatchMenuProps {
   videoId: string;
@@ -21,12 +30,14 @@ const WatchMenu = ({
   variant = "ghost",
   onRemove,
 }: WatchMenuProps) => {
+  const clerk = useClerk();
+  const { isSignedIn } = useUser();
   const [open, setOpen] = useState(false);
 
   const handleShare = () => {
-    const fullUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/watch/${videoId}`
-      : `http://localhost:3000/watch/${videoId}`;
+    const fullUrl = `${
+      process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+    }/watch/${videoId}`;
 
     navigator.clipboard.writeText(fullUrl).then(() => {
       toast.success("Link Copied");
@@ -35,7 +46,7 @@ const WatchMenu = ({
 
   return (
     <>
-      <PlaylistAddModal onOpenChange={setOpen} open={open} videoId={videoId}/>
+      <PlaylistAddModal onOpenChange={setOpen} open={open} videoId={videoId} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant={variant} size="icon" className="rounded-full">
@@ -49,12 +60,34 @@ const WatchMenu = ({
           }}
         >
           <DropdownMenuItem onClick={handleShare}>
-            <Share className="mr-2 size-4" />
+            <Forward className="mr-2 size-4" />
             Share
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setOpen(true)}>
+          <DropdownMenuItem onClick={() => clerk.openSignIn()}>
+            <Clock5 className="mr-2 size-4" />
+            Save To Watch Later
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              if (!isSignedIn) {
+                return clerk.openSignIn();
+              }
+              setOpen(true);
+            }}
+          >
             <ListPlus className="mr-2 size-4" />
-            Add To Playlist
+            Save To Playlist
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              if (!isSignedIn) {
+                return clerk.openSignIn();
+              }
+              // TODO: Add to not interested
+            }}
+          >
+            <Ban className="mr-2 size-4" />
+            Not Interested
           </DropdownMenuItem>
           {onRemove && (
             <DropdownMenuItem onClick={onRemove}>

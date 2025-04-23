@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
+
+import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import React, { useState } from "react";
 
 interface WatchDescriptionProps {
   compactViews: string;
@@ -36,7 +37,7 @@ const WatchDescription = ({
         <p
           className={cn(
             "text-sm whitespace-pre-wrap",
-            !isExpanded && "line-clamp-2"
+            !isExpanded && "line-clamp-1"
           )}
         >
           {description || "No description"}

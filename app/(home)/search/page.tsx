@@ -1,6 +1,6 @@
-import SearchView from "@/components/search/SearchView";
 import { DEFAULT_LIMIT } from "@/constant";
 import { HydrateClient, trpc } from "@/trpc/server";
+import SearchView from "@/components/search/SearchView";
 
 export const dynamic = "force-dynamic";
 

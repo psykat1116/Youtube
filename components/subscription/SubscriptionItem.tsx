@@ -1,7 +1,6 @@
-import React from "react";
-import UserAvatar from "../UserAvatar";
-import SubscriptionButton from "../watch/SubscriptionButton";
-import { Skeleton } from "../ui/skeleton";
+import UserAvatar from "@/components/UserAvatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import SubscriptionButton from "@/components/watch/SubscriptionButton";
 
 interface SubscriptionItemProps {
   name: string;

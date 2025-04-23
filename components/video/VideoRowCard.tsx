@@ -1,19 +1,21 @@
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
-
-import { Skeleton } from "../ui/skeleton";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-
-import UserAvatar from "../UserAvatar";
-import UserInfo from "../user/UserInfo";
-
-import WatchMenu from "../watch/WatchMenu";
-import VideoThumbnail, {
-  VideoThumbnailSkeleton,
-} from "../studio/VideoThumbnail";
-import { VideoGetManyOutput } from "@/types";
 import Link from "next/link";
 import { useMemo } from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import VideoThumbnail, {
+  VideoThumbnailSkeleton,
+} from "@/components/studio/VideoThumbnail";
+import { VideoGetManyOutput } from "@/types";
+import UserAvatar from "@/components/UserAvatar";
+import UserInfo from "@/components/user/UserInfo";
+import { Skeleton } from "@/components/ui/skeleton";
+import WatchMenu from "@/components/watch/WatchMenu";
 
 const videoRowCardVariants = cva("group flex min-w-0", {
   variants: {
@@ -111,7 +113,7 @@ const VideoRowCard = ({
           <Link prefetch href={`/watch/${data.id}`} className="flex-1 min-w-0">
             <h3
               className={cn(
-                "font-medium line-clamp-2",
+                "font-medium line-clamp-1",
                 size === "compact" ? "text-sm" : "text-base"
               )}
             >
@@ -134,7 +136,7 @@ const VideoRowCard = ({
                 </div>
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <p className="text-xs text-muted-foreground w-fit line-clamp-2">
+                    <p className="text-xs text-muted-foreground w-fit line-clamp-1">
                       {data.description ?? "No Description"}
                     </p>
                   </TooltipTrigger>

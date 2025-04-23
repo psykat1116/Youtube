@@ -7,12 +7,13 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "../ui/sidebar";
+} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import StudioSidebarHeader from "@/components/sidebar/StudioSidebarHeader";
+
 import Link from "next/link";
 import { LogOut, Video } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { Separator } from "../ui/separator";
-import StudioSidebarHeader from "./StudioSidebarHeader";
 
 const StudioSidebar = () => {
   const pathname = usePathname();

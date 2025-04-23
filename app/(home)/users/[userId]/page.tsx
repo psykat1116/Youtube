@@ -1,5 +1,5 @@
-import UserView from "@/components/user/UserView";
 import { DEFAULT_LIMIT } from "@/constant";
+import UserView from "@/components/user/UserView";
 import { HydrateClient, trpc } from "@/trpc/server";
 
 export const dynamic = "force-dynamic";

@@ -1,34 +1,17 @@
 "use client";
-import { Flame, Home, PlaySquare } from "lucide-react";
-import {
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "../ui/sidebar";
-import Link from "next/link";
-import { useAuth, useClerk } from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
 
-const items = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Subscription",
-    url: "/subscription",
-    icon: PlaySquare,
-    auth: true,
-  },
-  {
-    title: "Trending",
-    url: "/trending",
-    icon: Flame,
-  },
-];
+import {
+  SidebarMenu,
+  SidebarGroup,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarGroupContent,
+} from "@/components/ui/sidebar";
+import { MainItems } from "@/constant";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAuth, useClerk } from "@clerk/nextjs";
 
 const MainSection = () => {
   const clerk = useClerk();
@@ -39,7 +22,7 @@ const MainSection = () => {
     <SidebarGroup>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map((item) => (
+          {MainItems.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 tooltip={item.title}

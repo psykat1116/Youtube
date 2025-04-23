@@ -1,10 +1,12 @@
 "use client";
+
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+
 import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
-import VideoGridCard, { VideoGridCardSkeleton } from "../video/VideoGridCard";
-import InfiniteScroll from "../InfiniteScroll";
+import InfiniteScroll from "@/components/InfiniteScroll";
+import VideoGridCard, { VideoGridCardSkeleton } from "@/components/video/VideoGridCard";
 
 interface UserVideoSectionProps {
   userId: string;

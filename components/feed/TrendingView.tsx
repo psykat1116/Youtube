@@ -1,4 +1,4 @@
-import TrendingVideoSection from "./TrendingVideoSection";
+import TrendingVideoSection from "@/components/feed/TrendingVideoSection";
 
 const TrendingView = () => {
   return (

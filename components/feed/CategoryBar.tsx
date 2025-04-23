@@ -1,10 +1,11 @@
 "use client";
 
 import { Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import { trpc } from "@/trpc/client";
-import FilterCarousel from "./FilterCarousel";
 import { useRouter } from "next/navigation";
+import { ErrorBoundary } from "react-error-boundary";
+
+import { trpc } from "@/trpc/client";
+import FilterCarousel from "@/components/feed/FilterCarousel";
 
 interface CategoryBarProps {
   categoryId?: string;

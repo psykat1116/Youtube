@@ -1,24 +1,25 @@
 import { db } from "@/db";
 import { commentReactions, comments, users } from "@/db/schema";
+
+import {
+  eq,
+  lt,
+  or,
+  and,
+  desc,
+  count,
+  isNull,
+  inArray,
+  isNotNull,
+  getTableColumns,
+} from "drizzle-orm";
 import {
   baseProcedure,
   createTRPCRouter,
   protectedProcedure,
 } from "@/trpc/init";
-import { TRPCError } from "@trpc/server";
-import {
-  and,
-  count,
-  desc,
-  eq,
-  getTableColumns,
-  inArray,
-  isNotNull,
-  isNull,
-  lt,
-  or,
-} from "drizzle-orm";
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 
 export const commentsRouter = createTRPCRouter({
   create: protectedProcedure
