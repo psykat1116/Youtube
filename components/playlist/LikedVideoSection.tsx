@@ -6,8 +6,12 @@ import { ErrorBoundary } from "react-error-boundary";
 import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
-import VideoRowCard, { VideoRowCardSkeleton } from "@/components/video/VideoRowCard";
-import VideoGridCard, { VideoGridCardSkeleton } from "@/components/video/VideoGridCard";
+import VideoRowCard, {
+  VideoRowCardSkeleton,
+} from "@/components/video/VideoRowCard";
+import VideoGridCard, {
+  VideoGridCardSkeleton,
+} from "@/components/video/VideoGridCard";
 
 const LikedVideoSectionSkeleton = () => {
   return (
@@ -39,6 +43,14 @@ const LikedVideoSection = () => {
   return (
     <Suspense fallback={<LikedVideoSectionSkeleton />}>
       <ErrorBoundary fallback={<p>Error...</p>}>
+        {videos.pages.flatMap((page) => page.items).length === 0 && (
+          <div className="flex flex-col h-[22rem] items-center justify-center text-center bg-gray-100 rounded-md">
+            <p className="uppercase text-xl font-semibold">No Videos</p>
+            <p className="text-muted-foreground text-sm">
+              You have not liked any videos yet.
+            </p>
+          </div>
+        )}
         <div className="md:flex flex-col gap-4 hidden">
           {videos.pages
             .flatMap((page) => page.items)

@@ -7,6 +7,7 @@ import UserAvatar from "@/components/UserAvatar";
 import UserInfo from "@/components/user/UserInfo";
 import { useSubscription } from "@/hooks/useSubscription";
 import SubscriptionButton from "@/components/watch/SubscriptionButton";
+import { useMemo } from "react";
 
 interface WatchOwnerProps {
   user: VideoGetOneOutput["user"];
@@ -20,15 +21,21 @@ const WatchOwner = ({ user, videoId }: WatchOwnerProps) => {
     fromVideoId: videoId,
   });
 
+  const subscriberCount = useMemo(() => {
+    return Intl.NumberFormat("en-US", {
+      notation: "compact",
+    }).format(user.subscriberCount);
+  }, [user.subscriberCount]);
+
   return (
     <div className="flex items-center sm:items-start justify-between sm:justify-start gap-3 minw-0">
       <Link prefetch href={`/users/${user.id}`}>
         <div className="flex items-center gap-3 min-w-0">
           <UserAvatar size="lg" imageUrl={user.imageUrl} name={user.name} />
-          <div className="flex flex-col gap-1 min-w-0">
+          <div className="flex flex-col min-w-0">
             <UserInfo size="lg" name={user.name} />
-            <span className="text-sm text-muted-foreground line-clamp-1">
-              {user.subscriberCount} subscribers
+            <span className="text-xs text-muted-foreground line-clamp-1">
+              {subscriberCount} subscribers
             </span>
           </div>
         </div>
@@ -36,7 +43,7 @@ const WatchOwner = ({ user, videoId }: WatchOwnerProps) => {
       {userId === user.clerkId ? (
         <Button asChild variant="secondary" className="rounded-full">
           <Link prefetch href={`/studio/video/${videoId}`}>
-            Edit
+            Edit Video
           </Link>
         </Button>
       ) : (

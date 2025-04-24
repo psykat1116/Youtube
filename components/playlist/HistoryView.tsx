@@ -6,9 +6,7 @@ const HistoryView = () => {
       <div>
         <h1 className="text-2xl font-bold">History</h1>
         <p className="text-xs text-muted-foreground">
-          This is a list of all the videos you have played in the past. You can
-          use this to find videos you have played before and add them to your
-          playlist.
+          This is a list of all the videos you have played in the past.
         </p>
       </div>
       <HistoryVideoSection />

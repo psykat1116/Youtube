@@ -43,8 +43,8 @@ const VideoInfo = ({ data, onRemove }: VideoInfoProps) => {
       </Link>
       <div className="min-w-0 flex-1">
         <Link prefetch href={`/watch/${data.id}`}>
-          <h3 className="font-medium line-clamp-1 text-base break-words">
-            {data.title}
+          <h3 className="font-medium text-sm">
+            {data.title.slice(0, 55)}
           </h3>
         </Link>
         <Link prefetch href={`/users/${data.user.id}`}>

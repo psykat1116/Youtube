@@ -5,6 +5,7 @@ import {
   SidebarGroup,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarGroupLabel,
   SidebarGroupContent,
 } from "@/components/ui/sidebar";
 import { MainItems } from "@/constant";
@@ -20,6 +21,7 @@ const MainSection = () => {
 
   return (
     <SidebarGroup>
+      <SidebarGroupLabel>Home</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
           {MainItems.map((item) => (

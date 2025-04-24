@@ -122,7 +122,7 @@ const VideosSection = () => {
                       key={video.id}
                       onClick={() => router.push(`/studio/video/${video.id}`)}
                     >
-                      <TableCell className="pl-6">
+                      <TableCell className="pl-6 line-clamp-2">
                         <div className="flex items-center gap-4">
                           <div className="relative aspect-video w-36 shrink-0">
                             <VideoThumbnail
@@ -134,10 +134,12 @@ const VideosSection = () => {
                           </div>
                           <div className="flex flex-col overflow-hidden gap-y-1">
                             <span className="text-sm line-clamp-1">
-                              {video.title}
+                              {video.title.slice(0, 30)}...
                             </span>
                             <span className="text-xs text-muted-foreground line-clamp-1">
-                              {video.description || "No description"}
+                              {video.description?.slice(0, 30) ||
+                                "No description"}
+                              ...
                             </span>
                           </div>
                         </div>

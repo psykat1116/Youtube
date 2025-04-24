@@ -3,6 +3,7 @@
 import {
   Copy,
   Lock,
+  Info,
   Trash,
   Globe,
   Loader,
@@ -124,9 +125,10 @@ const FormSection = ({ videoId }: FormSectionProps) => {
 
   const update = trpc.videos.update.useMutation({
     onSuccess: () => {
+      toast.success("Video Updated Successfully");
       utils.studio.getMany.invalidate();
       utils.studio.getOne.invalidate({ id: videoId });
-      toast.success("Video updated successfully");
+      utils.videos.getMany.invalidate();
     },
     onError: (error) => {
       toast.error(error.message);
@@ -136,7 +138,6 @@ const FormSection = ({ videoId }: FormSectionProps) => {
     onSuccess: () => {
       router.push("/studio");
       utils.studio.getMany.invalidate();
-      toast.success("Video Deleted Successfully");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -203,21 +204,25 @@ const FormSection = ({ videoId }: FormSectionProps) => {
                 </Button>
                 <Button
                   variant="destructive"
-                  size="icon"
                   onClick={() => remove.mutate({ id: videoId })}
                   disabled={remove.isPending}
                 >
                   <Trash className="size-4" />
+                  Delete
                 </Button>
                 <Button
                   variant="secondary"
-                  size="icon"
                   onClick={() => revaildate.mutate({ id: videoId })}
                   disabled={revaildate.isPending}
                 >
                   <RefreshCcw className="size-4" />
+                  Refresh
                 </Button>
               </div>
+            </div>
+            <div className="flex items-center justify-end text-sm text-red-600 gap-x-2 mb-4">
+              <Info size={20}/>
+              Video Will Be Deleted Automatically after 24 hours of upload
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
               <div className="space-y-8 lg:col-span-3">

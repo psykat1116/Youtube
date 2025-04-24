@@ -6,8 +6,12 @@ import { ErrorBoundary } from "react-error-boundary";
 import { trpc } from "@/trpc/client";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
-import VideoRowCard, { VideoRowCardSkeleton } from "@/components/video/VideoRowCard";
-import VideoGridCard, { VideoGridCardSkeleton } from "@/components/video/VideoGridCard";
+import VideoRowCard, {
+  VideoRowCardSkeleton,
+} from "@/components/video/VideoRowCard";
+import VideoGridCard, {
+  VideoGridCardSkeleton,
+} from "@/components/video/VideoGridCard";
 
 interface SuggestionSectionProps {
   videoId: string;
@@ -46,6 +50,16 @@ const SuggestionSection = ({ videoId, isManual }: SuggestionSectionProps) => {
   return (
     <Suspense fallback={<SuggestionSectionSkeleton />}>
       <ErrorBoundary fallback={<p>Error</p>}>
+        {suggestions.pages.flatMap((page) => page.items).length === 0 && (
+          <div className="flex h-[50rem] bg-gray-100 rounded-md flex-col items-center justify-center">
+            <p className="uppercase text-sm font-semibold">
+              No Suggestions Found.
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Please check back later.
+            </p>
+          </div>
+        )}
         <div className="hidden md:block space-y-3">
           {suggestions.pages
             .flatMap((page) => page.items)

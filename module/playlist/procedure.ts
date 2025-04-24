@@ -639,4 +639,69 @@ export const playlistRouter = createTRPCRouter({
 
       return deletedPlaylist;
     }),
+  addToWatchLater: protectedProcedure
+    .input(
+      z.object({
+        videoId: z.string().uuid(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id: userId } = ctx.data;
+      const { videoId } = input;
+
+      const [existingPlaylist] = await db
+        .select()
+        .from(playlists)
+        .where(
+          and(eq(playlists.userId, userId), eq(playlists.name, "Watch Later"))
+        );
+
+      if (existingPlaylist) {
+        const [existingPlaylistVideo] = await db
+          .select()
+          .from(playlistVideos)
+          .where(
+            and(
+              eq(playlistVideos.videoId, videoId),
+              eq(playlistVideos.playlistId, existingPlaylist.id)
+            )
+          );
+
+        if (existingPlaylistVideo) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "Video already exists in Watch Later",
+          });
+        }
+
+        const [newPlaylistVideo] = await db
+          .insert(playlistVideos)
+          .values({
+            videoId,
+            playlistId: existingPlaylist.id,
+          })
+          .returning();
+
+        return newPlaylistVideo;
+      }
+
+      const [newPlaylist] = await db
+        .insert(playlists)
+        .values({
+          userId,
+          name: "Watch Later",
+          description: "A playlist for all the videos you want to watch later.",
+        })
+        .returning();
+
+      const [newPlaylistVideo] = await db
+        .insert(playlistVideos)
+        .values({
+          videoId,
+          playlistId: newPlaylist.id,
+        })
+        .returning();
+
+      return newPlaylistVideo;
+    }),
 });

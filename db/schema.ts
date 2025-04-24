@@ -1,13 +1,13 @@
 import {
   uuid,
   text,
-  pgTable,
-  timestamp,
-  uniqueIndex,
-  integer,
   pgEnum,
+  pgTable,
+  integer,
+  timestamp,
   primaryKey,
   foreignKey,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 import {
   createInsertSchema,
@@ -16,6 +16,8 @@ import {
 } from "drizzle-zod";
 import { relations } from "drizzle-orm";
 
+// *------------------------------- ENUMS For TABLES -------------------------------* //
+
 export const videoVisibility = pgEnum("video_visibility", [
   "private",
   "public",
@@ -23,15 +25,17 @@ export const videoVisibility = pgEnum("video_visibility", [
 
 export const videoReaction = pgEnum("video_reaction", ["like", "dislike"]);
 
+// *------------------------------- User TABLE -------------------------------* //
+
 export const users = pgTable(
   "users",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     name: text("name").notNull(),
-    imageUrl: text("image_url").notNull(),
-    clerkId: text("clerk_id").unique().notNull(),
     bannerUrl: text("banner_url"),
     bannerKey: text("banner_key"),
+    imageUrl: text("image_url").notNull(),
+    clerkId: text("clerk_id").unique().notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
@@ -39,19 +43,21 @@ export const users = pgTable(
 );
 
 export const userRelations = relations(users, ({ many }) => ({
-  videos: many(videos),
   views: many(views),
+  videos: many(videos),
+  comments: many(comments),
+  playlists: many(playlists),
   videoReactions: many(videoReactions),
+  commentReactions: many(commentReactions),
   subscribers: many(subscriptions, {
     relationName: "subscription_creator_id_fk",
   }),
   subscriptions: many(subscriptions, {
     relationName: "subscription_viewer_id_fk",
   }),
-  comments: many(comments),
-  commentReactions: many(commentReactions),
-  playlists: many(playlists),
 }));
+
+// *------------------------------- Category TABLE -------------------------------* //
 
 export const categories = pgTable(
   "categories",
@@ -68,6 +74,8 @@ export const categories = pgTable(
 export const categoryRelations = relations(categories, ({ many }) => ({
   videos: many(videos),
 }));
+
+// *------------------------------- Video TABLE -------------------------------* //
 
 export const videos = pgTable("videos", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -113,6 +121,8 @@ export const videoRelations = relations(videos, ({ one, many }) => ({
   playlistVideos: many(playlistVideos),
 }));
 
+// *------------------------------- Video Views TABLE -------------------------------* //
+
 export const views = pgTable(
   "views",
   {
@@ -148,6 +158,8 @@ export const viewSelectSchema = createSelectSchema(views);
 export const viewInsertSchema = createInsertSchema(views);
 export const viewUpdateSchema = createUpdateSchema(views);
 
+// *------------------------------- Video Reactions TABLE -------------------------------* //
+
 export const videoReactions = pgTable(
   "videoReactions",
   {
@@ -181,8 +193,10 @@ export const reactionRelations = relations(videoReactions, ({ one }) => ({
 }));
 
 export const videoReactionselectSchema = createSelectSchema(videoReactions);
-export const reactionInsertSchema = createInsertSchema(videoReactions);
-export const reactionUpdateSchema = createUpdateSchema(videoReactions);
+export const videoReactionInsertSchema = createInsertSchema(videoReactions);
+export const videoReactionUpdateSchema = createUpdateSchema(videoReactions);
+
+// *------------------------------- Subscriptions TABLE -------------------------------* //
 
 export const subscriptions = pgTable(
   "subscriptions",
@@ -220,6 +234,8 @@ export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
     relationName: "subscription_creator_id_fk",
   }),
 }));
+
+// *------------------------------- Comments TABLE -------------------------------* //
 
 export const comments = pgTable(
   "comments",
@@ -269,6 +285,8 @@ export const commentSelectSchema = createSelectSchema(comments);
 export const commentInsertSchema = createInsertSchema(comments);
 export const commentUpdateSchema = createUpdateSchema(comments);
 
+// *------------------------------- Comment Reactions TABLE -------------------------------* //
+
 export const commentReactions = pgTable(
   "commentReactions",
   {
@@ -304,6 +322,8 @@ export const commentReactionRelations = relations(
   })
 );
 
+// *------------------------------- Playlists TABLE -------------------------------* //
+
 export const playlists = pgTable("playlists", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
@@ -322,6 +342,8 @@ export const playlistRelations = relations(playlists, ({ one, many }) => ({
   }),
   playlistVideos: many(playlistVideos),
 }));
+
+// *------------------------------- Playlist Videos TABLE -------------------------------* //
 
 export const playlistVideos = pgTable(
   "playlist_videos",

@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { playlists, users } from "@/db/schema";
 
 import { eq } from "drizzle-orm";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
@@ -13,10 +13,19 @@ export async function POST(req: Request) {
 
     if (eventType === "user.created") {
       const data = evt.data;
-      await db.insert(users).values({
-        clerkId: data.id,
-        name: `${data.first_name || "John"} ${data.last_name || "Doe"}`,
-        imageUrl: data.image_url,
+      const [user] = await db
+        .insert(users)
+        .values({
+          clerkId: data.id,
+          name: `${data.first_name || "John"} ${data.last_name || "Doe"}`,
+          imageUrl: data.image_url,
+        })
+        .returning();
+
+      await db.insert(playlists).values({
+        name: "Watch Later",
+        userId: user.id,
+        description: "A playlist for all the videos you want to watch later.",
       });
     } else if (eventType === "user.updated") {
       const data = evt.data;

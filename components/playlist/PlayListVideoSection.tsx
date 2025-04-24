@@ -63,7 +63,7 @@ const PlaylistVideoSection = ({ playlistId }: PlaylistVideoSectionProps) => {
     <Suspense fallback={<PlaylistVideoSectionSkeleton />}>
       <ErrorBoundary fallback={<p>Error...</p>}>
         {videos.pages.flatMap((page) => page.items).length === 0 && (
-          <div className="flex flex-col items-center justify-center h-[20rem]">
+          <div className="flex bg-gray-100 flex-col items-center justify-center h-[22rem] rounded-md">
             <p className="text-center text-xl font-semibold uppercase">
               No videos
             </p>

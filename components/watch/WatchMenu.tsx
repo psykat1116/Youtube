@@ -18,6 +18,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useClerk, useUser } from "@clerk/nextjs";
+import { trpc } from "@/trpc/client";
 
 interface WatchMenuProps {
   videoId: string;
@@ -31,8 +32,21 @@ const WatchMenu = ({
   onRemove,
 }: WatchMenuProps) => {
   const clerk = useClerk();
+  const utils = trpc.useUtils();
   const { isSignedIn } = useUser();
   const [open, setOpen] = useState(false);
+
+  const AddToWatchLater = trpc.playlists.addToWatchLater.useMutation({
+    onSuccess: (data) => {
+      toast.success("Added To Watch Later");
+      utils.playlists.getVideo.invalidate({ playlistId: data.playlistId });
+      utils.playlists.getForVideo.invalidate({ videoId });
+      utils.playlists.getMany.invalidate();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   const handleShare = () => {
     const fullUrl = `${
@@ -63,7 +77,14 @@ const WatchMenu = ({
             <Forward className="mr-2 size-4" />
             Share
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => clerk.openSignIn()}>
+          <DropdownMenuItem
+            onClick={() => {
+              if (!isSignedIn) {
+                return clerk.openSignIn();
+              }
+              AddToWatchLater.mutate({ videoId });
+            }}
+          >
             <Clock5 className="mr-2 size-4" />
             Save To Watch Later
           </DropdownMenuItem>

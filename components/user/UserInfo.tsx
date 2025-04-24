@@ -30,7 +30,7 @@ const UserInfo = ({ name, className, size }: UserInfoProps) => {
             {name}
           </p>
         </TooltipTrigger>
-        <TooltipContent align="center" className="bg-black/70">
+        <TooltipContent align="center">
           <p>{name}</p>
         </TooltipContent>
       </Tooltip>

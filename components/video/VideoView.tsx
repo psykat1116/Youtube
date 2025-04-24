@@ -6,7 +6,7 @@ interface VideoViewProps {
 
 const VideoView = ({ videoId }: VideoViewProps) => {
   return (
-    <div className="px-4 pt-1.5 max-w-screen-lg">
+    <div className="px-4 pt-1.5 max-w-screen-lg mx-auto">
       <FormSection videoId={videoId} />
     </div>
   );

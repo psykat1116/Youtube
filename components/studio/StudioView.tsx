@@ -1,3 +1,5 @@
+import { Info } from "lucide-react";
+
 import VideosSection from "@/components/studio/VideosSection";
 
 const StudioView = () => {
@@ -8,6 +10,10 @@ const StudioView = () => {
         <p className="text-xs text-muted-foreground">
           Manage your channel content and videos
         </p>
+      </div>
+      <div className="flex items-center justify-end gap-x-2 px-4 text-sm text-red-600">
+        <Info size={20} />
+        <p>Video will be deleted automatically after 24 hours</p>
       </div>
       <VideosSection />
     </div>
