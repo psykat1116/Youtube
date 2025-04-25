@@ -40,6 +40,7 @@ import {
   SelectTrigger,
 } from "@/components/ui/select";
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { Input } from "@/components/ui/input";
 import { snakeCaseToTitle } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -183,7 +184,7 @@ const FormSection = ({ videoId }: FormSectionProps) => {
 
   return (
     <Suspense fallback={<FormSectionSkeleton />}>
-      <ErrorBoundary fallback={<p>Error...</p>}>
+      <ErrorBoundary fallback={<Error />}>
         <ThumbnailUploadModal
           onOpenChange={setThumbnailOpen}
           open={thumbnailOpen}
@@ -221,7 +222,7 @@ const FormSection = ({ videoId }: FormSectionProps) => {
               </div>
             </div>
             <div className="flex items-center justify-end text-sm text-red-600 gap-x-2 mb-4">
-              <Info size={20}/>
+              <Info size={20} />
               Video Will Be Deleted Automatically after 24 hours of upload
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">

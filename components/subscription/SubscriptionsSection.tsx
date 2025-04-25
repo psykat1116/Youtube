@@ -6,9 +6,12 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
-import SubscriptionItem, { SubscriptionItemSkeleton } from "@/components/subscription/SubscriptionItem";
+import SubscriptionItem, {
+  SubscriptionItemSkeleton,
+} from "@/components/subscription/SubscriptionItem";
 
 const SubscriptionsSectionSkeleton = () => {
   return (
@@ -46,7 +49,7 @@ const SubscriptionsSection = () => {
 
   return (
     <Suspense fallback={<SubscriptionsSectionSkeleton />}>
-      <ErrorBoundary fallback={<p>Error...</p>}>
+      <ErrorBoundary fallback={<Error />}>
         <div className="flex flex-col gap-4">
           {subscriptions.pages
             .flatMap((page) => page.items)

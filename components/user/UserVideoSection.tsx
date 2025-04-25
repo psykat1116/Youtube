@@ -4,9 +4,12 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
-import VideoGridCard, { VideoGridCardSkeleton } from "@/components/video/VideoGridCard";
+import VideoGridCard, {
+  VideoGridCardSkeleton,
+} from "@/components/video/VideoGridCard";
 
 interface UserVideoSectionProps {
   userId: string;
@@ -35,7 +38,7 @@ const UserVideoSection = ({ userId }: UserVideoSectionProps) => {
 
   return (
     <Suspense fallback={<UserVideoSectionSkeleton />}>
-      <ErrorBoundary fallback={<p>Error...</p>}>
+      <ErrorBoundary fallback={<Error />}>
         <div className="gap-4 gap-y-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4">
           {videos.pages
             .flatMap((page) => page.items)

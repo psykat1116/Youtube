@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import { Button } from "@/components/ui/button";
 import FilterCarousel from "@/components/feed/FilterCarousel";
 
 interface CategoryBarProps {
@@ -35,7 +36,7 @@ const CategoryBar = ({ categoryId }: CategoryBarProps) => {
     <Suspense
       fallback={<FilterCarousel isLoading data={[]} onSelect={() => {}} />}
     >
-      <ErrorBoundary fallback={<p>Error...</p>}>
+      <ErrorBoundary fallback={<Button>Something Went Wrong</Button>}>
         <FilterCarousel onSelect={onSelect} value={categoryId} data={data} />
       </ErrorBoundary>
     </Suspense>

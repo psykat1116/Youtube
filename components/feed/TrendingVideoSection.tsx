@@ -9,6 +9,7 @@ import InfiniteScroll from "@/components/InfiniteScroll";
 import VideoGridCard, {
   VideoGridCardSkeleton,
 } from "@/components/video/VideoGridCard";
+import Error from "@/components/Error";
 
 const TrendingVideoSectionSkeleton = () => {
   return (
@@ -32,7 +33,7 @@ const TrendingVideoSection = () => {
 
   return (
     <Suspense fallback={<TrendingVideoSectionSkeleton />}>
-      <ErrorBoundary fallback={<p>Error...</p>}>
+      <ErrorBoundary fallback={<Error />}>
         {videos.pages.flatMap((page) => page.items).length === 0 && (
           <div className="flex flex-col h-[22rem] items-center justify-center text-center">
             <p className="uppercase text-xl font-semibold">No Videos</p>

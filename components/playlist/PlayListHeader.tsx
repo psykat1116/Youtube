@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -41,7 +42,7 @@ const PlayListHeader = ({ playlistId }: PlayListHeaderProps) => {
 
   return (
     <Suspense fallback={<PlayListHeaderSkeleton />}>
-      <ErrorBoundary fallback={<p>Error.</p>}>
+      <ErrorBoundary fallback={<Error />}>
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-bold">{playlist.name}</h1>

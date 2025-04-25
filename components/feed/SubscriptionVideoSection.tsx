@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import VideoGridCard, {
@@ -32,7 +33,7 @@ const SubscriptionVideoSection = () => {
 
   return (
     <Suspense fallback={<SubscriptionVideoSectionSkeleton />}>
-      <ErrorBoundary fallback={<p>Error...</p>}>
+      <ErrorBoundary fallback={<Error />}>
         {videos.pages.flatMap((page) => page.items).length === 0 && (
           <div className="flex flex-col h-[22rem] items-center justify-center text-center">
             <p className="uppercase text-xl font-semibold">No Videos</p>

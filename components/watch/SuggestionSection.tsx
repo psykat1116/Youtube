@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import VideoRowCard, {
@@ -49,7 +50,7 @@ const SuggestionSection = ({ videoId, isManual }: SuggestionSectionProps) => {
 
   return (
     <Suspense fallback={<SuggestionSectionSkeleton />}>
-      <ErrorBoundary fallback={<p>Error</p>}>
+      <ErrorBoundary fallback={<Error />}>
         {suggestions.pages.flatMap((page) => page.items).length === 0 && (
           <div className="flex h-[50rem] bg-gray-100 rounded-md flex-col items-center justify-center">
             <p className="uppercase text-sm font-semibold">

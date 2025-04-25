@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import VideoRowCard, {
@@ -53,7 +54,7 @@ const ResultSection = ({ query, categoryId }: ResultSectionProps) => {
       key={`${query}-${categoryId}`}
       fallback={<ResultSectionSkeleton />}
     >
-      <ErrorBoundary fallback={<p>Error</p>}>
+      <ErrorBoundary fallback={<Error />}>
         {results.pages.flatMap((page) => page.items).length === 0 && (
           <div className="flex flex-col justify-center items-center h-[22rem]">
             <Image src="/Empty.svg" alt="Logo" height={300} width={300} />

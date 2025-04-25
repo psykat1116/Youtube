@@ -6,9 +6,14 @@ import { ErrorBoundary } from "react-error-boundary";
 
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import WatchBanner from "@/components/watch/WatchBanner";
-import VideoPlayer, { VideoPlayerSkeleton } from "@/components/video/VideoPlayer";
-import WatchTopRow, { WatchTopRowSkeleton } from "@/components/watch/WatchTopRow";
+import VideoPlayer, {
+  VideoPlayerSkeleton,
+} from "@/components/video/VideoPlayer";
+import WatchTopRow, {
+  WatchTopRowSkeleton,
+} from "@/components/watch/WatchTopRow";
 
 interface WatchSectionProps {
   videoId: string;
@@ -46,9 +51,7 @@ const WatchSection = ({ videoId }: WatchSectionProps) => {
 
   return (
     <Suspense fallback={<WatchSectionSkeleton />}>
-      <ErrorBoundary
-        fallback={<div className="text-center">Something went wrong</div>}
-      >
+      <ErrorBoundary fallback={<Error />}>
         <div
           className={cn(
             "aspect-video bg-black rounded-lg overflow-hidden relative",

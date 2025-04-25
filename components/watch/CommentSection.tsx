@@ -5,6 +5,7 @@ import { Loader } from "lucide-react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import CommentItem from "@/components/comment/CommentItem";
@@ -35,7 +36,7 @@ const CommentSection = ({ videoId }: CommentSectionProps) => {
 
   return (
     <Suspense fallback={<CommentSectionSkeleton />}>
-      <ErrorBoundary fallback={<p>Error...</p>}>
+      <ErrorBoundary fallback={<Error />}>
         <div className="mt-6">
           <div className="flex flex-col gap-6">
             <h1 className="font-semibold">

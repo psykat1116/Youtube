@@ -46,10 +46,19 @@ export const metadata: Metadata = {
     title: "Youtube",
     description:
       "Enjoy the videos and music you love, upload original content, and share it all with friends, family, and the world on YouTube.",
-    url: "https://youtube-ten-amber.vercel.app/",
+    url: "https://youtube-ten-amber.vercel.app",
     siteName: "Youtube",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "https://github.com/psykat1116/Youtube/blob/master/public/Opengraph.png?raw=true",
+        width: 1200,
+        height: 630,
+        alt: "Youtube",
+        type: "image/png",
+      },
+    ],
   },
 };
 

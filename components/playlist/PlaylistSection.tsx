@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
+import Error from "@/components/Error";
 import { DEFAULT_LIMIT } from "@/constant";
 import InfiniteScroll from "@/components/InfiniteScroll";
 import PlaylistGridCard, {
@@ -30,10 +31,12 @@ const PlaylistSection = () => {
 
   return (
     <Suspense fallback={<PlaylistSectionSkeleton />}>
-      <ErrorBoundary fallback={<p>Error...</p>}>
+      <ErrorBoundary fallback={<Error />}>
         {playlists.pages.flatMap((page) => page.items).length === 0 && (
           <div className="flex justify-center items-center h-[20rem] flex-col">
-            <p className="text-xl font-semibold uppercase">No playlists found</p>
+            <p className="text-xl font-semibold uppercase">
+              No playlists found
+            </p>
             <p className="text-muted-foreground text-sm">
               Create a new playlist to get started.
             </p>

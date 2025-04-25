@@ -4,8 +4,13 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
-import UserPageInfo, { UserPageInfoSkeleton } from "@/components/user/UserPageInfo";
-import UserPageBanner, { UserPageBannerSkeleton } from "@/components/user/UserPageBanner";
+import Error from "@/components/Error";
+import UserPageInfo, {
+  UserPageInfoSkeleton,
+} from "@/components/user/UserPageInfo";
+import UserPageBanner, {
+  UserPageBannerSkeleton,
+} from "@/components/user/UserPageBanner";
 
 interface UserSectionProps {
   userId: string;
@@ -25,7 +30,7 @@ const UserSection = ({ userId }: UserSectionProps) => {
 
   return (
     <Suspense fallback={<UserSectionSkeleton />}>
-      <ErrorBoundary fallback={<div>Error...</div>}>
+      <ErrorBoundary fallback={<Error />}>
         <div className="flex flex-col">
           <UserPageBanner user={user} />
           <UserPageInfo user={user} />
