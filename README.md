@@ -33,6 +33,9 @@ MUX_WEBHOOK_SECRET =
 DATABASE_URL =
 
 UPLOADTHING_TOKEN =
+
+// Later Change It To Your Hosted Domain
+NEXT_PUBLIC_SITE_URL = http://localhost:3000 
 ```
 
 ## 🎯 Get Database Url

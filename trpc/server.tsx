@@ -13,3 +13,5 @@ export const { trpc, HydrateClient } = createHydrationHelpers<typeof appRouter>(
   caller,
   getQueryClient
 );
+
+export const ServerCaller = appRouter.createCaller(createTRPCContext);
