@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://github.com/psykat1116/Youtube/blob/master/public/Opengraph.png?raw=true",
+        url: "https://youtube-ten-amber.vercel.app/Opengraph.png",
         width: 1200,
         height: 630,
         alt: "Youtube",
